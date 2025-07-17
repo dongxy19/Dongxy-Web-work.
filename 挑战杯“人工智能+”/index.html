@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>智链九州同脉录——AI人工智能问答+中华民族共同体意识</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="//cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="//webapi.amap.com/maps?v=2.0&key=ad0c959cbd4ad6514dc4ae68fd8a1db0&&plugin=AMap.Scale,AMap.HawkEye,AMap.ToolBar,AMap.ControlBar,AMap.MarkerClusterer"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        #container {
+            height: 100%;
+        }
+
+    
+        .input-item {
+            margin-bottom: 8px;
+        }
+        .input-item button {
+            margin-top: 5px;
+            padding: 4px 8px;
+            background: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        /* 点标记样式 */
+        .city-marker {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #1890ff;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .city-marker:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(24, 144, 255, 0.8);
+        }
+        
+        /* 信息窗口样式 */
+        .amap-info-content {
+            padding: 12px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            min-width: 200px;
+        }
+        .info-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #1890ff;
+            margin-bottom: 6px;
+        }
+        .info-content {
+            font-size: 13px;
+            color: #333;
+        }
+        
+        /* 聚合标记样式 */
+        .cluster-marker {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.8);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+    // 地图初始化 - 保持原有代码不变
+    var scale = new AMap.Scale({
+        visible: false
+    }),
+    toolBar = new AMap.ToolBar({
+        visible: false,
+        position: {
+          top: '110px',
+          right: '40px'
+        }
+    }),
+    controlBar = new AMap.ControlBar({
+        visible: false,
+        position: {
+          top: '10px',
+          right: '10px'
+        }
+    }),
+    overView = new AMap.HawkEye({
+        visible: true
+    }),
+    map = new AMap.Map("container", {
+        zoom: 5,
+        center: [114.582407,36.336358]  // 修正位置，确保地图中心正确
+    });
+    
+    map.addControl(scale);
+    map.addControl(toolBar);
+    map.addControl(controlBar);
+    map.addControl(overView);
+    
+    // 控制开关函数
+    function toggleScale(element) {
+        scale.setVisible(element.checked);
+    }
+    function toggleToolBar(element) {
+        toolBar.setVisible(element.checked);
+    }
+    function toggleControlBar(element) {
+        controlBar.setVisible(element.checked);
+    }
+    function toggleOverViewShow(element) {
+        overView.setVisible(element.checked);
+    }
+    
+    // 点标记数据 - 中国主要城市
+    var cities = [
+        {name: "邺城", position: [114.582407,36.336358], abbr: "邺", info: "苻坚，氐族 政治家，君王，改革家", button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'苻坚.html\'">人物介绍</button>'},
+        {name: "西域 伊利汗国", position: [87.583691,43.840065], abbr: "伊", info: "伯颜，蒙古族 军事家，太傅",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'伯颜.html\'">人物介绍</button>'},
+        {name: "光州", position: [115.058473,32.138999], abbr: "光", info: "马祖常，汪古族 诗人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'马祖常.html\'">人物介绍</button>'},
+        {name: "雁门", position: [112.968278,39.071383], abbr: "雁", info: "萨都剌，回族 诗人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'萨都剌.html\'">人物介绍</button>'},
+        {name: "庐州", position: [117.284949,31.870518], abbr: "余", info: "余阙，唐兀人 诗人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'余阙.html\'">人物介绍</button>'},
+        {name: "西域北庭", position: [89.189422,44.005303], abbr: "西", info: "贯云石，维吾尔族（畏兀儿人） 诗人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'贯云石.html\'">人物介绍</button>'},
+        {name: "蒙古", position: [112.529905,32.99753], abbr: "蒙", info: "月鲁不花，蒙古族 诗人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'月鲁不花.html\'">人物介绍</button>'},
+        {name: "中亚和中国新疆南部的部分地区", position: [81.409732,37.454391], abbr: "新", info: "王素普·哈斯·哈吉普，维吾尔族 诗人，文人",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'王素普·哈斯·哈吉普.html\'">人物介绍</button>'},
+        {name: "内蒙古自治区和林格尔县", position: [111.826702,40.384799], abbr: "内", info: "拓跋什翼犍，鲜卑族 君王，军事家，政治家",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'拓跋什翼犍.html\'">人物介绍</button>'},
+        {name: "内蒙古和林格尔", position: [111.807155,40.36897], abbr: "内", info: "拓跋珪，鲜卑族 君王，军事家，政治家",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'拓跋珪.html\'">人物介绍</button>'},
+        {name: "山西省大同市", position: [113.37451,40.101459], abbr: "山", info: "拓跋焘，鲜卑族 君王，军事家",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'拓跋焘.html\'">人物介绍</button>'},
+        {name: "谷塘原之行宫", position: [113.375085,40.101459], abbr: "谷", info: "拓跋宏，鲜卑族 君王，军事家",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'拓跋宏.html\'">人物介绍</button>'},
+        {name: "云中", position: [113.310694,40.100134], abbr: "云", info: "独孤信，鲜卑族 军事家",button: '<button style="padding: 6px 12px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="window.location.href=\'独孤信.html\'">人物介绍</button>'}
+    ];
+    
+    // 创建点标记
+    var markers = [];
+    
+    cities.forEach(function(city) {
+        // 创建标记内容
+        var content = document.createElement('div');
+        content.className = 'city-marker';
+        content.innerHTML = city.abbr;
+        
+        // 创建标记
+        var marker = new AMap.Marker({
+            position: city.position,
+            content: content,
+            offset: new AMap.Pixel(-12, -12),
+            title: city.name
+        });
+        // 创建信息窗口
+        var infoWindow = new AMap.InfoWindow({
+            content: '<div class="info-title">' + city.name + '</div>' +
+                     '<div class="info-content">' + city.info + '</div>' +
+                     (city.button ? '<div style="margin-top:10px;">' + city.button + '</div>' : ''),
+            offset: new AMap.Pixel(0, -30)
+        });
+        
+        // 添加点击事件
+        marker.on('click', function() {
+            infoWindow.open(map, marker.getPosition());
+        });
+        
+        markers.push(marker);
+    });
+    
+    // 使用点聚合
+    var cluster = new AMap.MarkerClusterer(map, markers, {
+        gridSize: 80,
+        renderClusterMarker: function(context) {
+            var count = context.count;
+            var div = document.createElement('div');
+            div.className = 'cluster-marker';
+            div.innerHTML = '<div>' + count + '</div>';
+            return div;
+        },
+        maxZoom: 10
+    });
+    
+    // 添加所有标记到地图
+    map.add(markers);
+</script>
+<!-- 数字人 -->
+<script
+    src="https://ai.youdao.com/saas/qanything/js/agent-iframe-min.js"
+    id="qanything-iframe"
+    data-agent-src="https://ai.youdao.com/saas/qanything/#/bots/4F57EE30A59A4CE7/share"
+    data-default-open=false
+    data-drag=true
+    data-open-icon="https://download.ydstatic.com/ead/icon-qanything-iframe-btn.png"
+    data-close-icon="https://download.ydstatic.com/ead/icon-qanything-iframe-btn.png"
+    defer
+>
+</script>
+</body>
+</html>

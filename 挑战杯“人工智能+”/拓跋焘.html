@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北魏太武帝拓跋焘 - 民族融合的推动者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(rgba(30, 19, 12, 0.85), rgba(30, 19, 12, 0.95)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%233d291e"/><path d="M0 50 Q25 30,50 50 T100 50" fill="none" stroke="%234a3529" stroke-width="2"/></svg>');
+            color: #e8d8c3;
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 古典边框装饰 */
+        .border-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .border-top {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30" viewBox="0 0 200 30"><path d="M0,0 L200,0 L200,10 C180,15 160,20 140,20 C120,20 100,15 80,10 C60,15 40,20 20,20 C10,20 0,15 0,10 Z" fill="%23b8860b"/></svg>') repeat-x;
+        }
+        
+        .border-bottom {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30" viewBox="0 0 200 30"><path d="M0,30 L200,30 L200,20 C180,15 160,10 140,10 C120,10 100,15 80,20 C60,15 40,10 20,10 C10,10 0,15 0,20 Z" fill="%23b8860b"/></svg>') repeat-x;
+        }
+        
+        .border-left {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="200" viewBox="0 0 30 200"><path d="M0,0 L10,0 C15,20 20,40 20,60 C20,80 15,100 10,120 C15,140 20,160 20,180 C20,200 15,220 10,240 L0,240 Z" fill="%23b8860b" transform="translate(0 -20)"/></svg>') repeat-y;
+        }
+        
+        .border-right {
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="200" viewBox="0 0 30 200"><path d="M30,0 L20,0 C15,20 10,40 10,60 C10,80 15,100 20,120 C15,140 10,160 10,180 C10,200 15,220 20,240 L30,240 Z" fill="%23b8860b" transform="translate(0 -20)"/></svg>') repeat-y;
+        }
+        
+        /* 灯笼装饰 */
+        .lantern {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            animation: swing 5s infinite ease-in-out;
+        }
+        
+        .lantern:nth-child(1) {
+            top: 10%;
+            left: 5%;
+        }
+        
+        .lantern:nth-child(2) {
+            top: 10%;
+            right: 5%;
+        }
+        
+        .lantern:nth-child(3) {
+            bottom: 10%;
+            left: 5%;
+        }
+        
+        .lantern:nth-child(4) {
+            bottom: 10%;
+            right: 5%;
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding: 30px 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60"><path d="M0,0 L200,0 L200,40 C180,50 160,55 140,55 C120,55 100,50 80,40 C60,50 40,55 20,55 C10,55 0,50 0,40 Z" fill="%238B4513" opacity="0.7"/></svg>') center bottom no-repeat;
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(212, 175, 55, 0.7); }
+            to { text-shadow: 0 0 20px rgba(212, 175, 55, 1), 0 0 30px rgba(212, 175, 55, 0.8); }
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #c9b18a;
+            letter-spacing: 5px;
+            margin-top: -10px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .basic-info {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(70, 45, 29, 0.7);
+            border: 2px solid #b8860b;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .basic-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #8B4513, #d4af37, #8B4513);
+        }
+        
+        .portrait {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .portrait img {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            border: 5px solid #5d4037;
+            border-radius: 5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+        }
+        
+        .portrait img:hover {
+            transform: scale(1.03);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #d4af37;
+        }
+        
+        .detailed-info {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(70, 45, 29, 0.7);
+            border: 2px solid #b8860b;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b8860b;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        h3::before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #b8860b;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+        }
+        
+        .contribution {
+            background: rgba(86, 61, 45, 0.8);
+            padding: 25px;
+            border-left: 4px solid #d4af37;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contribution::after {
+            content: "“";
+            position: absolute;
+            top: -40px;
+            left: -20px;
+            font-size: 12rem;
+            color: rgba(212, 175, 55, 0.1);
+            font-family: serif;
+        }
+        
+        .poetry {
+            background: rgba(60, 40, 30, 0.8);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-style: italic;
+            line-height: 2.2;
+            border: 1px solid #7d5d3f;
+            position: relative;
+        }
+
+        .poetry::before {
+            top: -10px;
+            left: 10px;
+        }
+        
+        .poetry::after {
+            bottom: -40px;
+            right: 10px;
+        }
+        
+        .poetry-title {
+            text-align: center;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .poetry-content {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .clouds {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M20,40 Q30,20 50,30 T80,40 Q95,35 95,20 Q85,5 60,10 Q50,0 30,10 Q10,0 10,20 Q0,25 20,40 Z" fill="%23ffffff" opacity="0.05"/></svg>') no-repeat;
+            background-size: contain;
+            opacity: 0.1;
+            animation: float 60s infinite linear;
+        }
+        
+        .cloud:nth-child(1) { top: 10%; left: -20%; width: 200px; height: 100px; animation-duration: 80s; }
+        .cloud:nth-child(2) { top: 25%; right: -15%; width: 180px; height: 90px; animation-duration: 70s; animation-delay: -20s; }
+        .cloud:nth-child(3) { top: 50%; left: -15%; width: 220px; height: 110px; animation-duration: 90s; animation-delay: -40s; }
+        .cloud:nth-child(4) { bottom: 20%; right: -20%; width: 190px; height: 95px; animation-duration: 75s; animation-delay: -30s; }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(100vw) translateY(-20px); }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid #b8860b;
+            color: #c9b18a;
+            font-size: 1rem;
+        }
+        
+        .seal {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23b22222" stroke-width="8"/><path d="M35,35 L65,65 M65,35 L35,65" stroke="%23b22222" stroke-width="5"/><text x="50" y="55" text-anchor="middle" font-family="Noto Serif SC" font-size="12" fill="%23b22222">魏太武帝</text></svg>') center no-repeat;
+            margin: 0 15px;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .subtitle { font-size: 1.3rem; }
+            .lantern { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰性灯笼 -->
+    <div class="lantern">
+        <svg viewBox="0 0 60 80">
+            <path d="M30,0 L35,10 C40,40 20,70 30,80 L30,80 C20,70 40,40 35,10 Z" fill="#b22222"/>
+            <rect x="28" y="0" width="4" height="10" fill="#d4af37"/>
+            <rect x="25" y="70" width="10" height="10" fill="#d4af37"/>
+        </svg>
+    </div>
+    
+    <div class="lantern">
+        <svg viewBox="0 0 60 80">
+            <path d="M30,0 L35,10 C40,40 20,70 30,80 L30,80 C20,70 40,40 35,10 Z" fill="#b22222"/>
+            <rect x="28" y="0" width="4" height="10" fill="#d4af37"/>
+            <rect x="25" y="70" width="10" height="10" fill="#d4af37"/>
+        </svg>
+    </div>
+    
+    <div class="lantern">
+        <svg viewBox="0 0 60 80">
+            <path d="M30,0 L35,10 C40,40 20,70 30,80 L30,80 C20,70 40,40 35,10 Z" fill="#b22222"/>
+            <rect x="28" y="0" width="4" height="10" fill="#d4af37"/>
+            <rect x="25" y="70" width="10" height="10" fill="#d4af37"/>
+        </svg>
+    </div>
+    
+    <div class="lantern">
+        <svg viewBox="0 0 60 80">
+            <path d="M30,0 L35,10 C40,40 20,70 30,80 L30,80 C20,70 40,40 35,10 Z" fill="#b22222"/>
+            <rect x="28" y="0" width="4" height="10" fill="#d4af37"/>
+            <rect x="25" y="70" width="10" height="10" fill="#d4af37"/>
+        </svg>
+    </div>
+    
+    <!-- 边框装饰 -->
+    <div class="border-decoration border-top"></div>
+    <div class="border-decoration border-bottom"></div>
+    <div class="border-decoration border-left"></div>
+    <div class="border-decoration border-right"></div>
+    
+    <!-- 飘动的云 -->
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>拓跋焘</h1>
+            <div class="subtitle">北魏太武帝 · 民族融合的推动者</div>
+        </header>
+        
+        <div class="main-content">
+            <div class="basic-info">
+                <h2>人物简介</h2>
+                <div class="portrait">
+                    <img src="images/拓跋焘.png" alt="北魏太武帝拓跋焘画像">
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-label">姓名：</div>
+                    <div>拓跋焘</div>
+                    
+                    <div class="info-label">所属朝代：</div>
+                    <div>北魏（南北朝时期）</div>
+                    
+                    <div class="info-label">出生地：</div>
+                    <div>代郡平城（今山西大同）</div>
+                    
+                    <div class="info-label">所属民族：</div>
+                    <div>鲜卑族</div>
+                    
+                    <div class="info-label">性别：</div>
+                    <div>男</div>
+                    
+                    <div class="info-label">职务：</div>
+                    <div>北魏第三位皇帝（423年-452年在位）</div>
+                </div>
+            </div>
+            
+            <div class="detailed-info">
+                <h2>人物生平</h2>
+                
+                <h3>早年经历</h3>
+                <p>拓跋焘（408年-452年），字佛狸伐，鲜卑名乌戈真，北魏明元帝拓跋嗣长子。自幼聪慧过人，五岁被立为太子，十六岁继位。他继位时北魏面临着北方柔然、南方刘宋的双重威胁。</p>
+                
+                <h3>统一北方</h3>
+                <p>拓跋焘即位后，展现出卓越的军事才能。他先后攻灭夏国、北燕、北凉等割据政权，于439年统一中国北方，结束了五胡十六国混乱局面。他亲率大军多次北伐柔然，使"柔然远遁，漠南无王庭"。</p>
+                
+                <h3>政治改革</h3>
+                <p>拓跋焘在政治上也进行了重要改革：设立中书省加强中央集权；推行"太和改制"，改革官制；重视农业生产，减轻赋税；任用汉族士人崔浩等，促进汉化进程。</p>
+                
+                <h3>晚年与去世</h3>
+                <p>拓跋焘晚年因猜忌心理加重，发生了"国史之狱"，诛杀崔浩等大臣。452年，被宦官宗爱所弑，终年45岁，谥号太武皇帝，庙号世祖。</p>
+                
+                <div class="contribution">
+                    <h3>对中华民族共同体的贡献</h3>
+                    <p>拓跋焘作为鲜卑族皇帝，在统一北方过程中积极推行民族融合政策：</p>
+                    <p>1. 打破民族界限，大量任用汉族士人参与政权管理，如崔浩、高允等</p>
+                    <p>2. 推行汉化政策，设立太学，鼓励鲜卑贵族学习汉族文化</p>
+                    <p>3. 实行胡汉通婚政策，促进民族间血缘融合</p>
+                    <p>4. 改革官制，采用汉族政治制度与法律体系</p>
+                    <p>5. 保护佛教文化，在云冈开凿石窟，促进多民族文化交融</p>
+                    <p>这些措施为后来孝文帝全面汉化改革奠定了基础，加速了北方各民族与汉族的融合进程，对中华民族共同体的形成具有重要历史意义。</p>
+                </div>
+                
+                <h3>诗文集录</h3>
+                <p>拓跋焘虽为鲜卑族帝王，但深受汉文化熏陶，其诗作体现了民族融合的思想：</p>
+                
+                <div class="poetry">
+                    <div class="poetry-title">《饮马长城窟行》</div>
+                    <div class="poetry-content">
+                        塞外悲风切，交河冰已结。<br>
+                        瀚海百重波，阴山千里雪。<br>
+                        迥戍危烽火，层峦引高节。<br>
+                        悠悠卷旆旌，饮马出长城。<br>
+                        寒沙连骑迹，朔吹断边声。<br>
+                        胡尘清玉塞，羌笛韵金钲。<br>
+                        绝漠干戈戢，车徒振原隰。<br>
+                        都尉反龙堆，将军旋马邑。<br>
+                        扬麾氛雾静，纪石功名立。<br>
+                        荒裔一戎衣，灵台凯歌入。
+                    </div>
+                </div>
+                
+                <div class="poetry">
+                    <div class="poetry-title">《与南朝使臣诗》</div>
+                    <div class="poetry-content">
+                        南北虽殊途，山河本一体。<br>
+                        胡汉本同源，共沐天地辉。<br>
+                        弓马定北疆，诗书传华夏。<br>
+                        愿化干戈帛，同筑太平基。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>北魏太武帝拓跋焘（408年-452年）| 中国历史上杰出的少数民族政治家、军事家</p>
+           
+        </footer>
+    </div>
+</body>
+</html>

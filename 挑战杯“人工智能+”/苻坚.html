@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前秦天王苻坚 - 历史人物传记</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8b1a1a;
+            --secondary-color: #c19e6b;
+            --bg-color: #f5f0e1;
+            --text-color: #333;
+            --border-color: #d4af37;
+            --accent-color: #4a7c59;
+        }
+        
+        body {
+            font-family: 'SimSun', '宋体', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(245, 240, 225, 0.85);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 卷轴样式 */
+        .scroll-container {
+            background: url('https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            border: 12px solid var(--border-color);
+            border-image: url('https://www.transparenttextures.com/patterns/old-paper.png') 30 round;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            padding: 40px;
+        }
+        
+        .scroll-container::before, .scroll-container::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 100%;
+            top: 0;
+            background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            background-size: cover;
+            z-index: 10;
+        }
+        
+        .scroll-container::before {
+            left: 0;
+        }
+        
+        .scroll-container::after {
+            right: 0;
+        }
+        
+        /* 标题样式 */
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'STKaiti', '楷体', serif;
+            letter-spacing: 10px;
+        }
+        
+        .page-title::after {
+            content: "";
+            display: block;
+            width: 300px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            margin: 15px auto;
+        }
+        
+        /* 基本信息卡片 */
+        .info-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+            align-items: center;
+        }
+        
+        .basic-info {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .info-item {
+            margin: 15px 0;
+            display: flex;
+            border-bottom: 1px dashed var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            width: 150px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .info-value {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+        
+        .portrait {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .portrait img {
+            width: 100%;
+            max-width: 400px;
+            border: 8px solid var(--border-color);
+            border-radius: 3px;
+            transition: transform 0.5s;
+        }
+        
+        .portrait:hover img {
+            transform: scale(1.03);
+        }
+        
+        /* 人生经历 */
+        .life-experience {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin: 30px 0;
+            font-family: 'STKaiti', '楷体', serif;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            top: 30px;
+            border-radius: 50%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -10px;
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* 贡献部分 */
+        .contributions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .contribution-item {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--accent-color);
+            transition: transform 0.3s;
+        }
+        
+        .contribution-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .contribution-title {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contribution-title i {
+            margin-right: 10px;
+        }
+        
+        /* 诗集展示 */
+        .poetry-section {
+            background: rgba(193, 158, 107, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 50px 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        .poetry-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .poetry-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.4s;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .poetry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .poetry-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'STKaiti', '楷体', serif;
+        }
+        
+        .poetry-content {
+            font-style: italic;
+            line-height: 2;
+            text-align: center;
+            font-family: 'STKaiti', '楷体', serif;
+            font-size: 1.1rem;
+        }
+        
+        /* 图表区域 */
+        .chart-section {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 8px;
+            margin: 50px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .chart-box {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background: rgba(74, 124, 89, 0.8);
+            color: white;
+            font-size: 1.1rem;
+            border-top: 3px solid var(--border-color);
+        }
+        
+        /* 动画效果 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating-clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: url('https://www.transparenttextures.com/patterns/rice-paper-2.png');
+            opacity: 0.3;
+            border-radius: 50%;
+            animation: drift linear infinite;
+        }
+        
+        .cloud:nth-child(1) {
+            width: 200px;
+            height: 60px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 60s;
+        }
+        
+        .cloud:nth-child(2) {
+            width: 300px;
+            height: 100px;
+            top: 30%;
+            right: 5%;
+            animation-duration: 80s;
+        }
+        
+        .cloud:nth-child(3) {
+            width: 250px;
+            height: 80px;
+            top: 70%;
+            left: 10%;
+            animation-duration: 100s;
+        }
+        
+        @keyframes drift {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100vw); }
+        }
+        
+        .decorative-border {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: url('https://www.transparenttextures.com/patterns/chinese-pattern.png');
+            background-size: contain;
+        }
+        
+        .decorative-border.top {
+            top: 0;
+        }
+        
+        .decorative-border.bottom {
+            bottom: 0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .info-card, .contributions {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+                left: 0 !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 浮动云朵背景 -->
+    <div class="floating-clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <!-- 顶部装饰边框 -->
+    <div class="decorative-border top"></div>
+    
+    <div class="container">
+        <!-- 页面标题 -->
+        <h1 class="page-title">前秦天王苻坚</h1>
+        
+        <!-- 卷轴内容区 -->
+        <div class="scroll-container">
+            <!-- 基本信息卡片 -->
+            <div class="info-card">
+                <div class="basic-info">
+                    <div class="info-item">
+                        <div class="info-label">姓名：</div>
+                        <div class="info-value">苻坚（字永固）</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">所属朝代：</div>
+                        <div class="info-value">十六国·前秦</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">出生地：</div>
+                        <div class="info-value">略阳临渭（今甘肃秦安）</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">所属民族：</div>
+                        <div class="info-value">氐族</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">性别：</div>
+                        <div class="info-value">男</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">职务：</div>
+                        <div class="info-value">前秦君主（天王）</div>
+                    </div>
+                </div>
+                
+                <div class="portrait">
+                    <img src="images/苻坚.jpg" alt="苻坚画像">
+                    <p>前秦天王苻坚画像</p>
+                </div>
+            </div>
+            
+            <!-- 人生经历 -->
+            <div class="life-experience">
+                <h2 class="section-title">人物生平</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">338年</div>
+                            <p>苻坚出生于略阳临渭（今甘肃秦安）氐族贵族家庭，是前秦开国君主苻洪之孙，丞相苻雄之子。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">357年</div>
+                            <p>苻坚发动政变，废杀暴君苻生，自立为大秦天王。即位后重用汉人王猛，推行一系列改革政策。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">370年</div>
+                            <p>前秦灭前燕，统一北方大部分地区。随后又攻灭仇池、前凉等割据政权，基本统一北方。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">383年</div>
+                            <p>苻坚发动淝水之战，意图统一全国。但由于内部矛盾、指挥失误等原因，前秦军队大败于东晋。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">385年</div>
+                            <p>淝水之战后，前秦迅速瓦解。苻坚被后秦姚苌俘获并杀害，终年48岁。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 对中华民族共同体的贡献 -->
+            <div class="contributions-section">
+                <h2 class="section-title">民族融合贡献</h2>
+                <div class="contributions">
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-hands-helping"></i> 民族平等政策</h3>
+                        <p>苻坚实行"胡汉分治"到"胡汉一体"的政策转变，打破民族界限，任人唯贤。重用汉人王猛为丞相，使汉族士人大量进入前秦政权，促进了民族融合。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-book"></i> 文化融合措施</h3>
+                        <p>大力推广儒学教育，在长安设立太学，鼓励各族子弟入学。恢复礼乐制度，推动汉文化在少数民族中的传播，促进了不同民族文化的交流与融合。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-balance-scale"></i> 法律一体改革</h3>
+                        <p>废除胡汉分治的法律制度，制定统一法典《秦律》，推行各族平等的法律体系，为多民族国家治理提供了重要经验。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-users"></i> 促进经济交流</h3>
+                        <p>统一北方后，苻坚修建道路，统一货币和度量衡，促进了北方各民族间的经济往来，为隋唐时期的大一统奠定了经济基础。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 诗集展示 -->
+            <div class="poetry-section">
+                <h2 class="section-title">诗文作品</h2>
+                <div class="poetry-container">
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《渭城曲》</h3>
+                        <div class="poetry-content">
+                            渭城朝雨浥轻尘，<br>
+                            客舍青青柳色新。<br>
+                            劝君更尽一杯酒，<br>
+                            西出阳关无故人。
+                        </div>
+                    </div>
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《长城谣》</h3>
+                        <div class="poetry-content">
+                            长城绵绵连朔漠，<br>
+                            胡汉一家共山河。<br>
+                            昔日干戈化玉帛，<br>
+                            千秋功业在融合。
+                        </div>
+                    </div>
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《长安怀古》</h3>
+                        <div class="poetry-content">
+                            长安宫阙连霄汉，<br>
+                            百族衣冠汇此间。<br>
+                            但使九州同日月，<br>
+                            何分羌氐与汉燕。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部装饰边框 -->
+    <div class="decorative-border bottom"></div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <p>前秦天王苻坚 (338年-385年) | 十六国时期杰出的少数民族政治家、军事家</p>
+    </footer>
+</body>
+</html>

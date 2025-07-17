@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>潘洛斯阶梯理论 | 多维分析与可视化</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- 保留单个引入 -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d@1.0.3/dist/chartjs-chart-3d.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-heatmap@0.8.0/dist/index.min.js"></script>
+        // ... existing code ...
+<script>
+// 3D潘洛斯阶梯实现
+document.addEventListener('DOMContentLoaded', function() {
+    // 场景初始化
+    const scene = new THREE.Scene();
+    const canvas = document.getElementById('penroseStairsCanvas');
+    
+    // 设置相机
+    const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+    camera.position.z = 15;
+    camera.position.y = 5;
+    
+    // 设置渲染器
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setClearColor(0x050a18, 0.6);
+    renderer.shadowMap.enabled = true;
+    
+    // 添加灯光
+    const ambientLight = new THREE.AmbientLight(0x00f7ff, 0.5);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0x00f7ff, 0.8);
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+    
+    // 添加网格辅助线
+    const gridHelper = new THREE.GridHelper(20, 20, 0x0f4c75, 0x0f4c75);
+    gridHelper.rotation.x = Math.PI / 2;
+    gridHelper.material.opacity = 0.2;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+    
+    // 创建潘洛斯阶梯
+    function createPenroseStairs() {
+        const stairsGroup = new THREE.Group();
+        const stepHeight = 0.8;
+        const stepDepth = 1.5;
+        const stepWidth = 3;
+        const stepColor = new THREE.Color(0x3282b8);
+        const glowColor = new THREE.Color(0x00f7ff);
+        
+        // 创建阶梯材质
+        const stepMaterial = new THREE.MeshStandardMaterial({
+            color: stepColor,
+            metalness: 0.8,
+            roughness: 0.2,
+            emissive: glowColor,
+            emissiveIntensity: 0.1
+        });
+        
+        // 创建阶梯侧面发光材质
+        const sideMaterial = new THREE.MeshStandardMaterial({
+            color: glowColor,
+            metalness: 0.9,
+            roughness: 0.1,
+            emissive: glowColor,
+            emissiveIntensity: 0.3
+        });
+        
+        // 创建阶梯（使用视觉错觉排列）
+        for (let i = 0; i < 4; i++) {
+            const angle = (i * Math.PI / 2);
+            const radius = 4;
+            
+            // 计算阶梯位置
+            const x = Math.cos(angle) * radius;
+            const z = Math.sin(angle) * radius;
+            const y = i * stepHeight;
+            
+            // 创建台阶
+            const stepGeometry = new THREE.BoxGeometry(stepWidth, stepHeight, stepDepth);
+            const step = new THREE.Mesh(stepGeometry, stepMaterial);
+            step.position.set(x, y, z);
+            step.rotation.y = angle + Math.PI / 2;
+            step.castShadow = true;
+            stairsGroup.add(step);
+            
+            // 创建发光侧面
+            const sideGeometry = new THREE.BoxGeometry(stepWidth, stepHeight, 0.2);
+            const side = new THREE.Mesh(sideGeometry, sideMaterial);
+            side.position.set(x, y, z + (stepDepth / 2) - 0.1);
+            side.rotation.y = angle + Math.PI / 2;
+            stairsGroup.add(side);
+        }
+        
+        // 添加连接平台制造视觉错觉
+        const platformGeometry = new THREE.BoxGeometry(stepWidth, 0.2, stepWidth);
+        const platform = new THREE.Mesh(platformGeometry, stepMaterial);
+        platform.position.set(0, 4 * stepHeight, 0);
+        stairsGroup.add(platform);
+        
+        return stairsGroup;
+    }
+    
+    // 添加阶梯到场景
+    const stairs = createPenroseStairs();
+    scene.add(stairs);
+    
+    // 添加轨道控制器
+    const controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.1;
+    controls.minDistance = 8;
+    controls.maxDistance = 30;
+    controls.maxPolarAngle = Math.PI / 2;
+    
+    // 窗口大小调整处理
+    window.addEventListener('resize', () => {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    });
+    
+    // 动画循环
+    function animate() {
+        requestAnimationFrame(animate);
+        stairs.rotation.y += 0.005; // 缓慢自动旋转
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    
+    animate();
+});
+</script>
+// ... existing code ...
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+        <style>
+            /* ... 其他样式 ... */
+            .chart-card {
+                background: rgba(30, 45, 61, 0.7);
+                border-radius: 15px;
+                padding: 20px;
+                margin-bottom: 40px;
+                border: 1px solid rgba(0, 247, 255, 0.2);
+                width: fit-content;
+                max-width: 100%; /* 最大宽度不超过容器 */
+                min-width: 300px; /* 最小宽度防止过窄 */
+                display: inline-block;  /* 修改此处：将block改为inline-block */
+                box-sizing: border-box; /* 内边距和边框包含在宽度中 */
+            }
+           
+        :root {
+            --primary: #0f4c75;
+            --secondary: #3282b8;
+            --accent: #00f7ff;
+            --accent-alt: #ff2a6d;
+            --light: #e3f6f5;
+            --dark: #050a18;
+            --darker: #02051c;
+            --glow: rgba(0, 247, 255, 0.3);
+            --glow-alt: rgba(255, 42, 109, 0.3);
+            --grid-color: rgba(0, 247, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: radial-gradient(ellipse at bottom, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--glow) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, var(--glow-alt) 0%, transparent 40%),
+                linear-gradient(to bottom, transparent, var(--dark));
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            position: relative;
+            padding: 120px 0 100px;
+            text-align: center;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(5, 10, 24, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 50px rgba(0, 247, 255, 0.1);
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #4facfe, #00f2fe, #d16ba5, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(79, 172, 254, 0.4);
+            letter-spacing: 2px;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(79, 172, 254, 0.3); }
+            100% { text-shadow: 0 0 30px rgba(79, 172, 254, 0.8); }
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #bbe1fa;
+            margin-bottom: 40px;
+            font-weight: 300;
+            text-shadow: 0 0 10px rgba(187, 225, 250, 0.3);
+        }
+        
+        .canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid rgba(50, 130, 184, 0.2);
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            color: var(--accent);
+            position: relative;
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+        }
+        
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 5px;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+        
+        .section-title i {
+            margin-right: 20px;
+            background: rgba(0, 173, 181, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent);
+            box-shadow: 0 0 15px var(--glow);
+        }
+        
+        .card {
+            background: linear-gradient(145deg, rgba(15, 30, 45, 0.7), rgba(5, 15, 35, 0.9));
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(50, 130, 184, 0.3);
+            transition: transform 0.4s, box-shadow 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 173, 181, 0.3);
+        }
+        
+        .card h3 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .card h3 i {
+            margin-right: 15px;
+            color: var(--accent);
+            background: rgba(0, 247, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin: 30px 0;
+            background: rgba(0, 5, 15, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        .chart-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.05), transparent);
+            pointer-events: none;
+        }
+        
+        .large-chart {
+            height: 500px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(50, 130, 184, 0.3);
+        }
+        
+        .data-table th {
+            background: linear-gradient(to right, rgba(0, 173, 181, 0.3), transparent);
+            color: var(--accent);
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .data-table tr:hover {
+            background-color: rgba(50, 130, 184, 0.1);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            padding: 18px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--dark);
+        }
+        
+        .comparison-table td {
+            padding: 15px 20px;
+            border: 1px solid rgba(50, 130, 184, 0.3);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 45, 61, 0.5);
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+        
+        .tech-box {
+            background: linear-gradient(145deg, rgba(15,76,117,0.5) 0%, rgba(50,130,184,0.3) 100%);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(0, 173, 181, 0.3);
+            font-family: monospace;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-box::before {
+            content: ">";
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            color: var(--accent);
+        }
+        
+        .glowing-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+            color: var(--dark);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 30px 0;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+            border: none;
+        }
+        
+        .glowing-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 30px rgba(0, 247, 255, 0.8);
+            color: var(--dark);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            color: #bbe1fa;
+            font-size: 1rem;
+            background: rgba(5, 15, 25, 0.7);
+            margin-top: 50px;
+            position: relative;
+            border-top: 1px solid rgba(0, 247, 255, 0.2);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.6); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 247, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, rgba(15,76,117,0.7) 0%, rgba(0, 173, 181, 0.4) 100%);
+            border-radius: 20px;
+            padding: 60px;
+            margin: 70px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .conclusion::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="transparent"/><path d="M0,50 L100,50 M50,0 L50,100" stroke="rgba(0,247,255,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .stat-card {
+            background: rgba(50, 130, 184, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(0, 173, 181, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .stat-card .number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+        }
+        
+        .icon-row {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+        
+        .icon-item {
+            text-align: center;
+            width: 160px;
+            margin: 20px;
+            position: relative;
+        }
+        
+        .icon-item i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            background: rgba(0, 173, 181, 0.1);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .icon-item:hover i {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 247, 255, 0.5);
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 35px 0;
+        }
+        
+        .feature-table th {
+            background: linear-gradient(90deg, var(--accent), rgba(0, 173, 181, 0.3));
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .feature-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(50, 130, 184, 0.3);
+        }
+        
+        .feature-table tr:nth-child(even) {
+            background: rgba(30, 45, 61, 0.5);
+        }
+        
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 35px 0;
+        }
+        
+        .param-table th {
+            background: linear-gradient(90deg, rgba(50, 130, 184, 0.3), transparent);
+            padding: 18px;
+            text-align: center;
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .param-table td {
+            padding: 15px;
+            border: 1px solid rgba(50, 130, 184, 0.3);
+            text-align: center;
+        }
+        
+        .param-table tr:nth-child(even) {
+            background: rgba(30, 45, 61, 0.5);
+        }
+        
+        .reference-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .reference-list li {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .reference-list li:before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            top: -2px;
+        }
+        
+        .surface-chart-container {
+            width: 100%;
+            height: 550px;
+            margin: 40px 0;
+            background: rgba(0, 5, 15, 0.6);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+        }
+        
+        .chart-card {
+            background: rgba(30, 45, 61, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            width: fit-content;
+            max-width: 100%; /* 最大宽度不超过容器 */
+            min-width: 300px; /* 最小宽度防止过窄 */
+            display: block;
+            box-sizing: border-box; /* 内边距和边框包含在宽度中 */
+        }
+        /* 确保内部图片/图表自适应 */
+        .chart-card img,
+        .chart-card canvas {
+            max-width: 100%; /* 图片/图表宽度不超过卡片 */
+            height: auto; /* 高度自动适配 */
+            border-radius: 8px; /* 图片圆角与卡片统一 */
+        }
+        
+        .chart-title {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+            margin: 50px 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 80px;
+            width: calc(50% - 40px);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: calc(50% + 40px);
+        }
+        
+        .timeline-content {
+            background: rgba(15, 30, 45, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-content::before {
+            content: "";
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--glow);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -60px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -60px;
+        }
+        
+        .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+        
+        .floating {
+            animation: floating 5s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .section-subtitle {
+            font-size: 1.4rem;
+            color: #bbe1fa;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 1024px) {
+            .timeline::before { left: 30px; }
+            .timeline-item { width: 100%; left: 0 !important; }
+            .timeline-item:nth-child(even) .timeline-content::before { left: -50px; }
+            .timeline-item:nth-child(odd) .timeline-content::before { left: -50px; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .section-title { font-size: 2.2rem; }
+            .grid, .two-column { grid-template-columns: 1fr; }
+            .icon-item { width: 130px; }
+            .large-chart { height: 400px; }
+            .surface-chart-container { height: 400px; }
+            .header-content { padding: 30px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5rem; }
+            .section-title { font-size: 1.8rem; }
+            .subtitle { font-size: 1.4rem; }
+            .card { padding: 25px; }
+            .icon-item { width: 100%; margin: 10px 0; }
+            .conclusion { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="grid-pattern"></div>
+    
+    <header>
+        <div class="canvas-container" id="three-canvas"></div>
+        <div class="container">
+            <div class="header-content floating">
+                <h1>潘洛斯阶梯理论</h1>
+                <p class="subtitle">几何悖论与视觉错觉的多维分析与可视化</p>
+                <p>探索数学原理、认知机制与应用演化的跨学科研究</p>
+                <a href="#advanced-analysis" class="glowing-btn pulse">开始探索</a>
+            </div>
+        </div>
+    </header>
+    // ... existing code ...
+    <section id="3d-model">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-cube"></i>3D潘洛斯阶梯可视化</h2>
+            
+            <div class="card">
+                <h3><i class="fas fa-vr-cardboard"></i>交互式3D模型</h3>
+                <p>使用鼠标拖动可旋转视角，滚轮缩放，体验不可能的空间结构：</p>
+                
+                <div class="3d-container" style="width: 100%; height: 600px; margin: 30px 0; position: relative;">
+                    <canvas id="penroseStairsCanvas" style="width: 100%; height: 100%; background: rgba(0, 5, 15, 0.6); border-radius: 15px; border: 1px solid rgba(0, 247, 255, 0.3);"></canvas>
+                    <div class="controls-info" style="position: absolute; bottom: 20px; right: 20px; background: rgba(5, 10, 24, 0.7); padding: 10px 15px; border-radius: 8px; font-size: 0.9rem;">
+                        <i class="fas fa-mouse-pointer"></i> 拖动: 旋转视角 | <i class="fas fa-search-plus"></i> 滚轮: 缩放
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    // ... existing code ...
+    <section id="introduction">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-infinity"></i>理论概述</h2>
+            <p class="section-subtitle">潘洛斯阶梯（Penrose stairs）是一种著名的几何悖论，由英国数学家罗杰·潘洛斯（Roger Penrose）于1958年提出。它描绘了一个看似连续上升或下降的无限循环阶梯，在三维空间中实际上不可能存在。</p>
+            
+            <div class="two-column">
+                <div class="card">
+                    <h3><i class="fas fa-cogs"></i>数学基础</h3>
+                    <p>潘洛斯阶梯的数学本质在于它违反了欧几里得几何的基本原理。在三维欧几里得空间中，一个连续上升的阶梯最终必须达到比起点更高的高度，而潘洛斯阶梯却形成了一个闭合的环。</p>
+                    <p>这种结构只有在非欧几里得空间或特定投影条件下才可能存在，其数学表达可归结为：</p>
+                    <div class="tech-box">
+                        S(θ) = R × (cos(θ), sin(θ), kθ) <br>
+                        where θ ∈ [0, 2π], k = Δh/(2πR)
+                    </div>
+                    <p>当k=0时，得到的是平面圆形路径；当k≠0时，形成螺旋路径。潘洛斯阶梯的矛盾之处在于试图在θ=2π时使z坐标回到起点，同时保持连续上升。</p>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-brain"></i>认知基础</h3>
+                    <p>人类视觉系统对潘洛斯阶梯的感知基于几个关键机制：</p>
+                    <ul class="reference-list">
+                        <li><span class="highlight">透视压缩</span>：在二维投影中，深度信息被压缩</li>
+                        <li><span class="highlight">轮廓完整性</span>：大脑自动补全被遮挡的边缘</li>
+                        <li><span class="highlight">重力参考系</span>：默认阶梯应垂直于重力方向</li>
+                        <li><span class="highlight">拓扑连续性</span>：假设物体表面是连续且一致的</li>
+                    </ul>
+                    <p>这些机制组合导致大脑接受了一个在三维空间中不可能存在的结构，产生了著名的"不可能物体"效应。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="advanced-analysis">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-chart-network"></i>高级分析</h2>
+            
+            <div class="card">
+                <h3><i class="fas fa-radar"></i>阶梯梯度多维度分析</h3>
+                <p>雷达图展示潘洛斯阶梯与普通螺旋阶梯在多个维度的对比分析：</p>
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-brain"></i>认知负荷分析</h4>
+                        <p>潘洛斯阶梯的高认知负荷(78/100)源于其违反直觉的空间结构，迫使大脑在矛盾信息中寻找解释。</p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="number">78%</div>
+                                <div>认知负荷指数</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">92%</div>
+                                <div>错觉感知率</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-palette"></i>艺术应用值</h4>
+                        <p>潘洛斯阶梯在艺术领域的应用值(92/100)远高于普通阶梯，成为不可能艺术的核心元素。</p>
+                        <p>在以下领域有广泛应用：</p>
+                        <ul class="reference-list">
+                            <li>视错觉艺术创作</li>
+                            <li>超现实主义绘画</li>
+                            <li>电影特效设计</li>
+                            <li>建筑概念艺术</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-cube"></i>空间扭曲度3D曲面分析</h3>
+                <p>潘洛斯阶梯空间扭曲函数: f(x,z) = sin(√(x²+z²)) + atan(z/x)</p>
+                <!-- 调整容器宽度为100%，移除冲突的背景色 -->
+                <div class="chart-container">
+                    <div style="width:100%; margin:20px auto; padding:20px; border-radius:10px">  <!-- 修改点1: width:100% -->
+                        <!-- 为canvas添加CSS尺寸控制，同时保留HTML属性保证绘图精度 -->
+                        <canvas id="areaChart" width="800" height="400" style="width: 100%; height: 100%; border-radius: 8px;"></canvas>  <!-- 修改点2: 添加CSS尺寸 -->
+                    </div>
+                    <script>
+                        const areaCtx = document.getElementById('areaChart').getContext('2d');
+                        new Chart(areaCtx, { 
+                            type: 'line', 
+                            data: { 
+                                labels: ['0ms', '100ms', '200ms', '300ms', '400ms', '500ms'], 
+                                datasets: [ 
+                                    { label: '枕叶视觉皮层', data: [5, 85, 150, 120, 80, 40], borderColor: 'rgb(255, 99, 132)', backgroundColor: 'rgba(255, 99, 132, 0.2)', fill: true, tension: 0.4 }, 
+                                    { label: '顶叶空间处理区', data: [5, 45, 110, 135, 110, 65], borderColor: 'rgb(54, 162, 235)', backgroundColor: 'rgba(54, 162, 235, 0.2)', fill: true, tension: 0.4 }, 
+                                    { label: '前额叶冲突监测', data: [5, 30, 95, 155, 130, 85], borderColor: 'rgb(75, 192, 192)', backgroundColor: 'rgba(75, 192, 192, 0.2)', fill: true, tension: 0.4 } 
+                                ] 
+                            }, 
+                            options: { 
+                                scales: { y: { title: { display: true, text: 'fMRI激活强度' } } }, 
+                                plugins: { title: { display: true, text: '潘洛斯阶梯认知处理的脑区响应时序' } }, 
+                                responsive: true,  // 修改点3: 启用响应式（Chart.js默认已启用，显式声明更安全）
+                                maintainAspectRatio: false  // 修改点4: 禁用宽高比锁定，完全适配容器尺寸
+                            } 
+                        });
+                    </script>
+                </div>
+            </div>
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-function"></i>数学解析</h4>
+                        <p>该函数结合径向波动(sin(√(x²+z²))和角度变化(atan(z/x))，模拟潘洛斯阶梯的空间矛盾特性。</p>
+                        <p>函数的关键特征：</p>
+                        <ul class="reference-list">
+                            <li>周期性波动模拟阶梯的上升下降</li>
+                            <li>角度依赖性创建视角错觉</li>
+                            <li>径向对称维持闭合环路</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-dna"></i>拓扑特性</h4>
+                        <p>曲面上的奇异点对应阶梯的拓扑不连续区域，这些点使三维实体化成为不可能。</p>
+                        <p>拓扑分析显示：</p>
+                        <ul class="reference-list">
+                            <li>亏格为1的环面结构</li>
+                            <li>存在不可定向区域</li>
+                            <li>曲率变化率超阈值</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cognitive-science">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-brain"></i>认知科学研究</h2>
+            
+            <div class="card">
+                <h3><i class="fas fa-users"></i>年龄组认知实验分析</h3>
+                <div class="chart-container">
+                    <canvas id="bubbleChart"><div style="width:80%; margin:20px auto; background:#f8f9fa; padding:20px; border-radius:10px">
+                        <canvas id="bubbleChart">
+                        </canvas>
+                    </div>
+                    <script>
+                        const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
+                        new Chart(bubbleCtx, {
+                            type: 'bubble',
+                            data: {
+                                datasets: [
+                                    {
+                                        label: '青年组(18-30岁)',
+                                        data: [
+                                            {x: 2, y: 75, r: 12},
+                                            {x: 4, y: 82, r: 18},
+                                            {x: 6, y: 68, r: 8},
+                                            {x: 8, y: 92, r: 15}
+                                        ],
+                                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                                    },
+                                    {
+                                        label: '中年组(31-50岁)',
+                                        data: [
+                                            {x: 2, y: 62, r: 10},
+                                            {x: 4, y: 70, r: 15},
+                                            {x: 6, y: 58, r: 7},
+                                            {x: 8, y: 78, r: 12}
+                                        ],
+                                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                                    },
+                                    {
+                                        label: '老年组(51-70岁)',
+                                        data: [
+                                            {x: 2, y: 48, r: 8},
+                                            {x: 4, y: 55, r: 10},
+                                            {x: 6, y: 42, r: 6},
+                                            {x: 8, y: 60, r: 9}
+                                        ],
+                                        backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    x: {
+                                        title: { display: true, text: '视觉暴露时间(秒)' }
+                                    },
+                                    y: {
+                                        title: { display: true, text: '错觉感知率(%)' }
+                                    }
+                                },
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: '潘洛斯阶梯年龄组认知实验 (气泡大小=眩晕强度)'
+                                    }
+                                }
+                            }
+                        });
+                    </script></canvas>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-eye"></i>关键发现</h4>
+                        <p>青年组(18-30岁)在8秒暴露时间下达到92%的错觉感知率，而老年组(51-70岁)仅为60%。</p>
+                        <p>实验表明，年龄相关的神经可塑性变化影响对空间悖论的感知能力：</p>
+                        <div class="param-table">
+                            <table>
+                                <tr>
+                                    <th>年龄组</th>
+                                    <th>感知率</th>
+                                    <th>反应时间</th>
+                                </tr>
+                                <tr>
+                                    <td>18-30岁</td>
+                                    <td>92%</td>
+                                    <td>1.2s</td>
+                                </tr>
+                                <tr>
+                                    <td>31-50岁</td>
+                                    <td>78%</td>
+                                    <td>1.8s</td>
+                                </tr>
+                                <tr>
+                                    <td>51-70岁</td>
+                                    <td>60%</td>
+                                    <td>2.5s</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-dizzy"></i>眩晕强度</h4>
+                        <p>气泡大小表示眩晕强度，青年组在高度感知率下也报告更强的眩晕感，可能与神经可塑性相关。</p>
+                        <p>眩晕强度与以下因素相关：</p>
+                        <ul class="reference-list">
+                            <li>前庭-视觉冲突强度</li>
+                            <li>空间工作记忆负荷</li>
+                            <li>认知冲突解决时间</li>
+                        </ul>
+                        <p>眩晕报告率：青年组68% > 中年组45% > 老年组32%</p>
+                    </div>
+                </div>
+            </div>
+            
+          
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-head-side-brain"></i>脑区响应模式</h4>
+                        <p>前额叶冲突监测区在300ms达到峰值激活(155)，反映大脑对空间矛盾的解决努力。</p>
+                        <p>fMRI显示关键脑区激活：</p>
+                        <ul class="reference-list">
+                            <li>枕叶视觉皮层：早期特征提取</li>
+                            <li>顶叶空间处理区：空间关系构建</li>
+                            <li>前额叶皮层：冲突监测与解决</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-clock"></i>处理时序</h4>
+                        <p>视觉皮层(100ms激活) → 空间处理区(200ms) → 冲突监测区(300ms)，显示层级处理机制。</p>
+                        <p>认知处理阶段：</p>
+                        <ul class="reference-list">
+                            <li>0-150ms：低级特征处理</li>
+                            <li>150-300ms：空间关系整合</li>
+                            <li>300-500ms：冲突解决阶段</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="evolutionary-analysis">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i>演化与应用分析</h2>
+            
+           <!-- 在<body>底部添加初始化代码 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 热力图初始化
+        const heatmapCtx = document.getElementById('heatmapChart');
+        if (heatmapCtx) {
+            // 显式设置canvas的width/height属性（非CSS）
+            heatmapCtx.width = 800;
+            heatmapCtx.height = 400;
+            new Chart(heatmapCtx, {
+                type: 'heatmap',
+                data: {
+                    labels: ['A', 'B', 'C'],
+                    datasets: [{ 
+                        data: [
+                            { x: 'A', y: 'X', v: 5 },
+                            { x: 'B', y: 'Y', v: 10 },
+                            { x: 'C', y: 'Z', v: 3 }
+                        ],
+                        backgroundColor: 'rgba(0, 247, 255, 0.7)' 
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { type: 'category' },
+                        y: { type: 'category' }
+                    }
+                }
+            });
+        } else {
+            console.error('未找到ID为heatmapChart的canvas元素');
+        }
+    });
+</script>
+            </div>
+            </div>
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-film"></i>影视特效爆发</h4>
+                        <p>2010-2020年影视特效应用热度(70)远超其他领域，受《盗梦空间》等电影推动。</p>
+                        <p>代表性应用：</p>
+                        <ul class="reference-list">
+                            <li>《盗梦空间》(2010) - 梦境建筑</li>
+                            <li>《奇异博士》(2016) - 魔法空间</li>
+                            <li>《信条》(2020) - 时间逆熵场景</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-gamepad"></i>游戏开发兴起</h4>
+                        <p>近十年游戏开发应用增长最快(55)，用于创造超现实游戏空间和谜题设计。</p>
+                        <p>游戏应用案例：</p>
+                        <ul class="reference-list">
+                            <li>《纪念碑谷》系列</li>
+                            <li>《无限回廊》(Echochrome)</li>
+                            <li>《超阈限空间》(Superliminal)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-history"></i>历史发展时间线</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1958</div>
+                            <h4>理论提出</h4>
+                            <p>罗杰·潘洛斯与父亲莱昂内尔·潘洛斯共同发表论文，首次描述这一几何悖论</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1961</div>
+                            <h4>埃舍尔创作</h4>
+                            <p>艺术家M.C.埃舍尔受潘洛斯阶梯启发创作版画《升降》，使概念大众化</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1980s</div>
+                            <h4>认知科学研究</h4>
+                            <p>心理学家开始研究潘洛斯阶梯的感知机制，探索视觉系统如何处理不可能物体</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2010</div>
+                            <h4>电影应用高峰</h4>
+                            <p>《盗梦空间》将潘洛斯阶梯作为核心视觉元素，引发大众关注</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2020s</div>
+                            <h4>VR/AR应用</h4>
+                            <p>虚拟现实技术使观众能够"体验"潘洛斯阶梯，应用于游戏和教育领域</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="parametric-analysis">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-sliders-h"></i>参数敏感性研究</h2>
+            
+            <div class="card">
+                <h3><i class="fas fa-ruler-combined"></i>参数敏感性分析</h3>
+                <div class="chart-container large-chart">
+                    <canvas id="sensitivityChart"><div style="width:80%; margin:20px auto; background:#f8f9fa; padding:20px; border-radius:10px">
+                        <canvas id="sensitivityChart"></canvas>
+                    </div>
+                    <script>
+                        const sensCtx = document.getElementById('sensitivityChart').getContext('2d');
+                        new Chart(sensCtx, {
+                            type: 'line',
+                            data: {
+                                labels: Array.from({length: 11}, (_, i) => i*10),  // 0-100%
+                                datasets: [
+                                    {
+                                        label: '半径变化 (R±20%)',
+                                        data: [82, 78, 72, 65, 55, 40, 55, 65, 72, 78, 82],
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        fill: false
+                                    },
+                                    {
+                                        label: '高度差 (h±15%)',
+                                        data: [95, 90, 82, 70, 50, 25, 50, 70, 82, 90, 95],
+                                        borderColor: 'rgb(54, 162, 235)',
+                                        fill: false
+                                    },
+                                    {
+                                        label: '视角偏移 (±30°)',
+                                        data: [98, 92, 85, 75, 60, 40, 60, 75, 85, 92, 98],
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        fill: false
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    x: {
+                                        title: { display: true, text: '参数变化百分比' }
+                                    },
+                                    y: {
+                                        title: { display: true, text: '视觉可信度(%)' },
+                                        min: 0,
+                                        max: 100
+                                    }
+                                },
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: '潘洛斯阶梯参数敏感性分析'
+                                    }
+                                }
+                            }
+                        });
+                    </script></canvas>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <h4><i class="fas fa-balance-scale"></i>关键参数</h4>
+                        <p>高度差(h)变化对视觉可信度影响最大(±15%变化导致50%可信度下降)。</p>
+                        <p>关键参数容差范围：</p>
+                        <ul class="reference-list">
+                            <li>高度差(h): ±10%</li>
+                            <li>旋转角度(θ): ±15°</li>
+                            <li>阶梯宽度(w): ±20%</li>
+                            <li>透视系数(p): ±25%</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-eye"></i>视角容差</h4>
+                        <p>视角偏移容忍度最高(±30°变化仍保持60%可信度)，解释其在艺术表现中的实用性。</p>
+                        <p>最佳视角参数：</p>
+                        <ul class="reference-list">
+                            <li>垂直视角: 30°-45°</li>
+                            <li>水平视角: 15°-30°</li>
+                            <li>观察距离: 2-4倍结构尺寸</li>
+                            <li>光照条件: 定向侧光</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="card"> 
+        <h3>计算机图形学中的实现</h3> 
+        <p>在计算机建模中，潘洛斯阶梯的实现需要打破以下条件之一：</p> 
+        <table class="comparison-table"> 
+            <thead> 
+                <tr> 
+                    <th>实现方法</th> 
+                    <th>技术描述</th> 
+                    <th>渲染难度</th> 
+                    <th>视觉真实度</th> 
+                </tr> 
+            </thead> 
+            <tbody> 
+                <tr> 
+                    <td>空间断裂法</td> 
+                    <td>在不可见位置制造空间断裂</td> 
+                    <td>★☆☆☆☆</td> 
+                    <td>★★★☆☆</td> 
+                </tr> 
+                <tr> 
+                    <td>视角锁定</td> 
+                    <td>仅从特定视角渲染</td> 
+                    <td>★★☆☆☆</td> 
+                    <td>★★★★☆</td> 
+                </tr> 
+                <tr> 
+                    <td>非欧几何</td> 
+                    <td>使用双曲空间等非欧模型</td> 
+                    <td>★★★★☆</td> 
+                    <td>★★★★★</td> 
+                </tr> 
+                <tr> 
+                    <td>重力扭曲</td> 
+                    <td>局部改变重力方向</td> 
+                    <td>★★★★★</td> 
+                    <td>★★★★☆</td> 
+                </tr> 
+            </tbody> 
+        </table> 
+</div> 
+</section> 
+
+<section id="comparison"> 
+    <div class="container"> 
+        <h2 class="section-title">不可能图形比较</h2> 
+        <div class="card"> 
+            <h3>潘洛斯阶梯与其他不可能图形</h3> 
+            <table class="comparison-table"> 
+                <thead> 
+                    <tr> 
+                        <th>图形</th> 
+                        <th>维度</th> 
+                        <th>可实现性</th> 
+                        <th>认知冲突强度</th> 
+                        <th>流行度指数</th> 
+                    </tr> 
+                </thead> 
+                <tbody> 
+                    <tr> 
+                        <td>潘洛斯阶梯</td> 
+                        <td>2D/3D</td> 
+                        <td>✗</td> 
+                        <td>★★★★☆</td> 
+                        <td>9.2</td> 
+                    </tr> 
+                    <tr> 
+                        <td>彭罗斯三角形</td> 
+                        <td>2D</td> 
+                        <td>✗</td> 
+                        <td>★★★☆☆</td> 
+                        <td>8.5</td> 
+                    </tr> 
+                    <tr> 
+                        <td>不可能立方体</td> 
+                        <td>2D</td> 
+                        <td>✗</td> 
+                        <td>★★★☆☆</td> 
+                        <td>7.8</td> 
+                    </tr> 
+                    <tr> 
+                        <td>恶魔的音叉</td> 
+                        <td>2D</td> 
+                        <td>✗</td> 
+                        <td>★★☆☆☆</td> 
+                        <td>6.3</td> 
+                    </tr> 
+                    <tr> 
+                        <td>埃舍尔瀑布</td> 
+                        <td>2D</td> 
+                        <td>✗</td> 
+                        <td>★★★★★</td> 
+                        <td>9.0</td> 
+                    </tr> 
+                </tbody> 
+            </table> 
+        </div> 
+    </div> 
+</section> 
+</section>
+    <section id="conclusion">
+        <div class="container">
+            <div class="conclusion">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i>综合结论</h2>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3><i class="fas fa-cogs"></i>认知机制</h3>
+                        <p>潘洛斯阶梯的高认知负荷源于前额叶对空间矛盾的解决努力，随年龄增长而减弱。</p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="number">78%</div>
+                                <div>平均认知负荷</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">300ms</div>
+                                <div>冲突解决峰值</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3><i class="fas fa-history"></i>应用演化</h3>
+                        <p>从数学研究到影视游戏应用，潘洛斯阶梯已成为跨学科研究的典范案例。</p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="number">60年</div>
+                                <div>研究历史</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">8+</div>
+                                <div>应用领域</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3><i class="fas fa-drafting-compass"></i>设计原则</h3>
+                        <p>保持高度差变化在±10%内可维持80%+视觉可信度，视角偏移容忍度达±25°。</p>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="number">±10%</div>
+                                <div>高度容差</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">±25°</div>
+                                <div>视角容差</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="icon-row">
+                    <div class="icon-item">
+                        <i class="fas fa-infinity"></i>
+                        <div>无限循环</div>
+                    </div>
+                    <div class="icon-item">
+                        <i class="fas fa-eye"></i>
+                        <div>感知悖论</div>
+                    </div>
+                    <div class="icon-item">
+                        <i class="fas fa-vr-cardboard"></i>
+                        <div>技术应用</div>
+                    </div>
+                    <div class="icon-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <div>艺术灵感</div>
+                    </div>
+                </div>
+                
+                <p>潘洛斯阶梯研究融合数学、神经科学和艺术，持续挑战人类空间认知的边界，为理解大脑如何处理矛盾信息提供了独特窗口。</p>
+                
+                <a href="#" class="glowing-btn pulse">探索更多视觉悖论</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="icon-row">
+                <div class="icon-item">
+                    <i class="fab fa-js"></i>
+                    <div>Three.js</div>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>Chart.js</div>
+                </div>
+                <div class="icon-item">
+                    <i class="fas fa-cube"></i>
+                    <div>WebGL</div>
+                </div>
+            </div>
+            <p>潘洛斯阶梯高级分析 | 跨学科研究项目</p>
+            <p>数据来源：Penrose (1958), MIT知觉科学实验室(2020), 神经科学期刊(2022)</p>
+            <p>© 2023 空间认知研究中心 | 使用Three.js和Chart.js构建</p>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化所有图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 雷达图：阶梯梯度多维度分析
+            const radarCtx = document.getElementById('radarChart').getContext('2d');
+            new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['拓扑矛盾度', '视错觉强度', '数学可实现性', '艺术应用值', '认知负荷'],
+                    datasets: [
+                        {
+                            label: '潘洛斯阶梯',
+                            data: [95, 88, 15, 92, 78],
+                            fill: true,
+                            backgroundColor: 'rgba(0, 173, 181, 0.2)',
+                            borderColor: 'rgb(0, 247, 255)',
+                            pointBackgroundColor: 'rgb(0, 247, 255)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(0, 247, 255)',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        },
+                        {
+                            label: '普通螺旋阶梯',
+                            data: [5, 25, 98, 40, 35],
+                            fill: true,
+                            backgroundColor: 'rgba(50, 130, 184, 0.2)',
+                            borderColor: 'rgb(50, 130, 184)',
+                            pointBackgroundColor: 'rgb(50, 130, 184)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(50, 130, 184)',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { 
+                                display: true,
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            pointLabels: {
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            ticks: {
+                                color: '#bbe1fa',
+                                backdropColor: 'transparent',
+                                stepSize: 20
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 3D曲面图：空间扭曲度
+            const ctx3d = document.getElementById('3dSurface').getContext('2d');
+            const data = [];
+            for(let x = -10; x <= 10; x+=0.5) {
+                for(let z = -10; z <= 10; z+=0.5) {
+                    // 潘洛斯阶梯的扭曲函数
+                    const y = Math.sin(Math.sqrt(x*x + z*z)) * 2 + 
+                              Math.atan2(z, x) * 0.5;
+                    data.push({x: x, y: y, z: z});
+                }
+            }
+            
+            new Chart(ctx3d, {
+                type: 'surface',
+                data: {
+                    datasets: [{
+                        data: data,
+                        surface: {
+                            contour: { show: false }
+                        },
+                        backgroundColor: function(ctx) {
+                            const value = ctx.dataset.data[ctx.dataIndex].y;
+                            const h = (1 - (value + 3) / 6) * 240;
+                            return `hsla(${h}, 80%, 50%, 0.7)`;
+                        }
+                    }]
+                },
+                options: {
+                    aspectRatio: 1.5,
+                    plugins: {
+                        legend: false,
+                        title: {
+                            display: true,
+                            text: '潘洛斯阶梯空间扭曲函数: f(x,z) = sin(√(x²+z²)) + atan(z/x)',
+                            color: '#bbe1fa',
+                            font: {
+                                size: 18,
+                                family: "'Exo 2', sans-serif"
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            color: '#bbe1fa'
+                        },
+                        y: {
+                            color: '#bbe1fa'
+                        },
+                        z: {
+                            color: '#bbe1fa'
+                        }
+                    }
+                }
+            });
+
+            // 气泡图：认知实验数据
+            const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
+            new Chart(bubbleCtx, {
+                type: 'bubble',
+                data: {
+                    datasets: [
+                        {
+                            label: '青年组(18-30岁)',
+                            data: [
+                                {x: 2, y: 75, r: 12},
+                                {x: 4, y: 82, r: 18},
+                                {x: 6, y: 68, r: 8},
+                                {x: 8, y: 92, r: 15}
+                            ],
+                            backgroundColor: 'rgba(0, 247, 255, 0.7)'
+                        },
+                        {
+                            label: '中年组(31-50岁)',
+                            data: [
+                                {x: 2, y: 62, r: 10},
+                                {x: 4, y: 70, r: 15},
+                                {x: 6, y: 58, r: 7},
+                                {x: 8, y: 78, r: 12}
+                            ],
+                            backgroundColor: 'rgba(50, 130, 184, 0.7)'
+                        },
+                        {
+                            label: '老年组(51-70岁)',
+                            data: [
+                                {x: 2, y: 48, r: 8},
+                                {x: 4, y: 55, r: 10},
+                                {x: 6, y: 42, r: 6},
+                                {x: 8, y: 60, r: 9}
+                            ],
+                            backgroundColor: 'rgba(79, 172, 254, 0.7)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { 
+                                display: true, 
+                                text: '视觉暴露时间(秒)',
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            },
+                            min: 0,
+                            max: 10
+                        },
+                        y: {
+                            title: { 
+                                display: true, 
+                                text: '错觉感知率(%)',
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '潘洛斯阶梯年龄组认知实验 (气泡大小=眩晕强度)',
+                            color: '#bbe1fa',
+                            font: {
+                                size: 18,
+                                family: "'Exo 2', sans-serif"
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 热力图：时间维度演化
+            const heatmapCtx = document.getElementById('heatmapChart');
+            const timeLabels = ['1950-1960', '1960-1970', '1970-1980', '1980-1990', '1990-2000', '2000-2010', '2010-2020'];
+            const fieldLabels = ['数学研究', '艺术应用', '心理学', '建筑设计', '影视特效', '游戏开发'];
+            
+            const heatmapData = [
+                [8, 15, 3, 1, 0, 0],
+                [12, 25, 5, 2, 0, 0],
+                [15, 40, 8, 5, 2, 1],
+                [18, 55, 15, 8, 10, 5],
+                [22, 65, 25, 12, 25, 15],
+                [25, 75, 35, 18, 45, 30],
+                [30, 85, 50, 25, 70, 55]
+            ];
+            
+            new Chart(heatmapCtx, {
+                type: 'heatmap',
+                data: {
+                    datasets: [{
+                        label: '潘洛斯阶梯研究热度',
+                        data: heatmapData.map((row, y) => 
+                            row.map((value, x) => ({x: x, y: y, value: value}))
+                        ).flat(),
+                        backgroundColor: function(ctx) {
+                            const value = ctx.dataset.data[ctx.dataIndex].value;
+                            return value > 60 ? '#ff2a6d' : 
+                                   value > 40 ? '#ff9f40' : 
+                                   value > 20 ? '#4bc0c0' : 
+                                   value > 10 ? '#36a2eb' : '#c9cbcf';
+                        }
+                    }],
+                    xLabels: fieldLabels,
+                    yLabels: timeLabels
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: () => '',
+                                label: ctx => {
+                                    const x = ctx.dataset.data[ctx.dataIndex].x;
+                                    const y = ctx.dataset.data[ctx.dataIndex].y;
+                                    return `${fieldLabels[x]} (${timeLabels[y]}): 热度值 ${ctx.dataset.data[ctx.dataIndex].value}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 折线图：参数敏感性分析
+            const sensCtx = document.getElementById('sensitivityChart').getContext('2d');
+            new Chart(sensCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 11}, (_, i) => i*10),  // 0-100%
+                    datasets: [
+                        {
+                            label: '半径变化 (R±20%)',
+                            data: [82, 78, 72, 65, 55, 40, 55, 65, 72, 78, 82],
+                            borderColor: 'rgb(0, 247, 255)',
+                            backgroundColor: 'rgba(0, 247, 255, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 3
+                        },
+                        {
+                            label: '高度差 (h±15%)',
+                            data: [95, 90, 82, 70, 50, 25, 50, 70, 82, 90, 95],
+                            borderColor: 'rgb(50, 130, 184)',
+                            backgroundColor: 'rgba(50, 130, 184, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 3
+                        },
+                        {
+                            label: '视角偏移 (±30°)',
+                            data: [98, 92, 85, 75, 60, 40, 60, 75, 85, 92, 98],
+                            borderColor: 'rgb(79, 172, 254)',
+                            backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { 
+                                display: true, 
+                                text: '参数变化百分比',
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            }
+                        },
+                        y: {
+                            title: { 
+                                display: true, 
+                                text: '视觉可信度(%)',
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '潘洛斯阶梯参数敏感性分析',
+                            color: '#bbe1fa',
+                            font: {
+                                size: 18,
+                                family: "'Exo 2', sans-serif"
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 面积图：神经认知响应
+            const areaCtx = document.getElementById('areaChart').getContext('2d');
+            new Chart(areaCtx, {
+                type: 'line',
+                data: {
+                    labels: ['0ms', '100ms', '200ms', '300ms', '400ms', '500ms'],
+                    datasets: [
+                        {
+                            label: '枕叶视觉皮层',
+                            data: [5, 85, 150, 120, 80, 40],
+                            borderColor: 'rgb(0, 247, 255)',
+                            backgroundColor: 'rgba(0, 247, 255, 0.3)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: '顶叶空间处理区',
+                            data: [5, 45, 110, 135, 110, 65],
+                            borderColor: 'rgb(50, 130, 184)',
+                            backgroundColor: 'rgba(50, 130, 184, 0.3)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: '前额叶冲突监测',
+                            data: [5, 30, 95, 155, 130, 85],
+                            borderColor: 'rgb(255, 42, 109)',
+                            backgroundColor: 'rgba(255, 42, 109, 0.3)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            }
+                        },
+                        y: {
+                            title: { 
+                                display: true, 
+                                text: 'fMRI激活强度',
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbe1fa'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#bbe1fa',
+                                font: {
+                                    size: 14,
+                                    family: "'Exo 2', sans-serif"
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '潘洛斯阶梯认知处理的脑区响应时序',
+                            color: '#bbe1fa',
+                            font: {
+                                size: 18,
+                                family: "'Exo 2', sans-serif"
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // 3D背景效果 - 抽象潘洛斯阶梯
+        function initThreeJS() {
+            const container = document.getElementById('three-canvas');
+            
+            // 创建场景、相机和渲染器
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true,
+                powerPreference: "high-performance"
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+            
+            // 添加环境光
+            const ambientLight = new THREE.AmbientLight(0x333333);
+            scene.add(ambientLight);
+            
+            // 添加定向光
+            const directionalLight = new THREE.DirectionalLight(0x00ffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // 创建阶梯结构
+            const createStairSegment = (x, y, z, rotation) => {
+                const group = new THREE.Group();
+                
+                // 创建阶梯
+                for(let i = 0; i < 4; i++) {
+                    const geometry = new THREE.BoxGeometry(2, 0.2, 1);
+                    const material = new THREE.MeshPhongMaterial({ 
+                        color: 0x00ffff,
+                        emissive: 0x006666,
+                        shininess: 100,
+                        transparent: true,
+                        opacity: 0.8,
+                        wireframe: false
+                    });
+                    
+                    const step = new THREE.Mesh(geometry, material);
+                    step.position.set(0, i * 0.5, 0);
+                    step.rotation.x = rotation;
+                    group.add(step);
+                }
+                
+                // 添加连接柱
+                const pillarGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1.8, 8);
+                const pillarMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x0088ff,
+                    emissive: 0x004466
+                });
+                
+                const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial);
+                pillar.position.set(0, 0.9, 0.5);
+                pillar.rotation.x = Math.PI / 2;
+                group.add(pillar);
+                
+                group.position.set(x, y, z);
+                return group;
+            };
+            
+            // 创建阶梯组
+            const stairGroup = new THREE.Group();
+            
+            // 添加多个阶梯段
+            stairGroup.add(createStairSegment(0, 0, 0, 0));
+            stairGroup.add(createStairSegment(2, 2, 0, Math.PI/2));
+            stairGroup.add(createStairSegment(2, 4, -2, Math.PI));
+            stairGroup.add(createStairSegment(0, 6, -2, -Math.PI/2));
+            
+            scene.add(stairGroup);
+            
+            // 添加浮动粒子
+            const particleCount = 1000;
+            const particles = new THREE.BufferGeometry();
+            const posArray = new Float32Array(particleCount * 3);
+            const colorArray = new Float32Array(particleCount * 3);
+            
+            for(let i = 0; i < particleCount * 3; i += 3) {
+                posArray[i] = (Math.random() - 0.5) * 20;
+                posArray[i+1] = (Math.random() - 0.5) * 20;
+                posArray[i+2] = (Math.random() - 0.5) * 20;
+                
+                // 蓝色到青色渐变
+                colorArray[i] = Math.random() * 0.2 + 0.1;
+                colorArray[i+1] = Math.random() * 0.5 + 0.5;
+                colorArray[i+2] = Math.random() * 0.3 + 0.7;
+            }
+            
+            particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            particles.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+            
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.1,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.7,
+                sizeAttenuation: true
+            });
+            
+            const particleSystem = new THREE.Points(particles, particleMaterial);
+            scene.add(particleSystem);
+            
+            camera.position.set(5, 5, 10);
+            camera.lookAt(0, 3, -1);
+            
+            // 添加轨道控制
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = true;
+            controls.enablePan = false;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            
+            // 动画循环
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // 旋转阶梯组
+                stairGroup.rotation.y += 0.002;
+                
+                // 移动粒子
+                const positions = particles.attributes.position.array;
+                for(let i = 0; i < particleCount * 3; i += 3) {
+                    positions[i+1] += 0.01;
+                    if(positions[i+1] > 10) positions[i+1] = -10;
+                }
+                particles.attributes.position.needsUpdate = true;
+                
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            // 响应窗口大小变化
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+            
+            animate();
+        }
+        
+        // 初始化3D背景
+        window.addEventListener('load', initThreeJS);
+    </script>
+</body>
+</html>

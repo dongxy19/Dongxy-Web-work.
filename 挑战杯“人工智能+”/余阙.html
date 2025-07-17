@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>元朝名臣余阙 - 民族融合的践行者</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'ZCOOL XiaoWei', serif;
+            background: linear-gradient(to bottom, #f9f2e7, #e8dfca);
+            color: #5c3a21;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f9f2e7"/><path d="M0,0 Q50,20 100,0 T100,100 Q50,80 0,100 Z" fill="%23e8dfca" opacity="0.2"/></svg>');
+            background-size: 300px 300px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 装饰元素 */
+        .decoration {
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .decoration.top-left {
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M20,20 C50,0 150,0 180,20 C200,50 200,150 180,180 C150,200 50,200 20,180 C0,150 0,50 20,20 Z" fill="none" stroke="%23a67c52" stroke-width="2" opacity="0.3"/></svg>');
+        }
+        
+        .decoration.bottom-right {
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><path d="M280,280 C250,300 150,300 120,280 C100,250 100,150 120,120 C150,100 250,100 280,120 C300,150 300,250 280,280 Z" fill="none" stroke="%23a67c52" stroke-width="2" opacity="0.3"/></svg>');
+        }
+        
+        /* 飘落的花瓣 */
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="%23d4a798" opacity="0.7"/></svg>');
+            z-index: -1;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 卷轴容器 */
+        .scroll-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="100%" viewBox="0 0 1200 100"><rect width="1200" height="100%" fill="%23f5e8d9"/><path d="M0,0 Q600,40 1200,0" stroke="%23c9a87c" stroke-width="1" fill="none"/><path d="M0,100 Q600,60 1200,100" stroke="%23c9a87c" stroke-width="1" fill="none"/></svg>') center/cover;
+            border-left: 15px solid #8b5a2b;
+            border-right: 15px solid #8b5a2b;
+            box-shadow: 0 10px 30px rgba(139, 90, 43, 0.3);
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .header h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            color: #8b1a1a;
+            text-shadow: 3px 3px 5px rgba(139, 26, 26, 0.2);
+            margin-bottom: 20px;
+            letter-spacing: 10px;
+        }
+        
+        .header .dynasty {
+            font-size: 2.2rem;
+            color: #a67c52;
+            background: linear-gradient(to right, transparent, #e8dfca, transparent);
+            padding: 10px 0;
+            display: inline-block;
+            width: 100%;
+            margin-top: -15px;
+        }
+        
+        /* 基本资料卡片 */
+        .profile-card {
+            background: rgba(245, 232, 217, 0.8);
+            border: 2px solid #c9a87c;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #8b1a1a, #c9a87c, #8b1a1a);
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .profile-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .profile-label {
+            font-weight: bold;
+            min-width: 120px;
+            color: #8b1a1a;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .profile-label::before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #a67c52;
+            font-size: 1.2rem;
+        }
+        
+        .profile-value {
+            flex: 1;
+        }
+        
+        /* 人物画像 */
+        .portrait-container {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .portrait-frame {
+            display: inline-block;
+            border: 15px solid #8b5a2b;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="none" stroke="%238b5a2b" stroke-width="15" rx="10"/></svg>') 30 stretch;
+            box-shadow: 0 10px 25px rgba(139, 90, 43, 0.3);
+            position: relative;
+            overflow: hidden;
+            background: #f5e8d9;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .portrait {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #d9c6a5, #f5e8d9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .portrait::before {
+            content: "余阙画像";
+            position: absolute;
+            bottom: 20px;
+            font-style: italic;
+            color: #8b5a2b;
+        }
+        
+        .portrait i {
+            font-size: 8rem;
+            color: #a67c52;
+            opacity: 0.3;
+        }
+        
+        /* 内容区域 */
+        .section {
+            margin: 50px 0;
+            padding: 30px;
+            background: rgba(245, 232, 217, 0.7);
+            border-left: 5px solid #8b1a1a;
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #8b1a1a;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #c9a87c;
+            display: inline-block;
+        }
+        
+        .section-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 2em;
+        }
+        
+        .section-content p {
+            margin-bottom: 20px;
+        }
+        
+        /* 诗集展示 */
+        .poetry-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .poetry-card {
+            background: rgba(245, 232, 217, 0.9);
+            border: 1px solid #c9a87c;
+            padding: 25px;
+            border-radius: 5px;
+            position: relative;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.1);
+        }
+        
+        .poetry-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(139, 90, 43, 0.2);
+        }
+
+        
+        .poetry-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            color: #8b1a1a;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .poetry-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: #a67c52;
+            border-top: 1px dashed #c9a87c;
+            font-size: 1.1rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .scroll-container {
+                padding: 30px 15px;
+                margin: 20px;
+                border-left: 8px solid #8b5a2b;
+                border-right: 8px solid #8b5a2b;
+            }
+            
+            .portrait-frame {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰元素 -->
+    <div class="decoration top-left"></div>
+    <div class="decoration bottom-right"></div>
+    
+    <!-- 飘落的花瓣 -->
+    <div class="petal" style="left: 5%; animation-duration: 15s; animation-delay: 0s;"></div>
+    <div class="petal" style="left: 15%; animation-duration: 18s; animation-delay: 2s;"></div>
+    <div class="petal" style="left: 30%; animation-duration: 12s; animation-delay: 5s;"></div>
+    <div class="petal" style="left: 45%; animation-duration: 20s; animation-delay: 1s;"></div>
+    <div class="petal" style="left: 60%; animation-duration: 16s; animation-delay: 3s;"></div>
+    <div class="petal" style="left: 75%; animation-duration: 14s; animation-delay: 4s;"></div>
+    <div class="petal" style="left: 90%; animation-duration: 17s; animation-delay: 6s;"></div>
+    
+    <div class="scroll-container">
+        <!-- 标题区域 -->
+        <div class="header">
+            <h1>余阙</h1>
+            <div class="dynasty">元朝名臣 · 民族融合的践行者</div>
+        </div>
+        
+        <!-- 基本资料 -->
+        <div class="profile-card">
+            <div class="profile-grid">
+                <div>
+                    <div class="profile-item">
+                        <div class="profile-label">姓 名</div>
+                        <div class="profile-value">余阙 (字廷心，号天赐)</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">所属朝代</div>
+                        <div class="profile-value">元朝 (1303-1358)</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">出生地</div>
+                        <div class="profile-value">庐州 (今安徽合肥)</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">所属民族</div>
+                        <div class="profile-value">唐兀儿 (西夏党项族)</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="profile-item">
+                        <div class="profile-label">性 别</div>
+                        <div class="profile-value">男</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">职 务</div>
+                        <div class="profile-value">
+                            淮南行省左丞<br>
+                            浙东廉访司佥事<br>
+                            都元帅
+                        </div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">谥 号</div>
+                        <div class="profile-value">忠宣</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 人物画像 -->
+        <div class="portrait-container">
+            <div class="portrait-frame">
+                <div class="portrait">
+                    <img src="images/余阙.png" >
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 人物生平 -->
+        <div class="section">
+            <h2 class="section-title">人物生平</h2>
+            <div class="section-content">
+                <p>余阙(1303-1358)，字廷心，号天赐，庐州(今安徽合肥)人，元朝著名政治家、军事家、文学家。祖籍河西武威，属唐兀儿(西夏党项族)。元统元年(1333年)进士及第，授同知泗州事。为官清廉，体恤民情，深得百姓爱戴。</p>
+                
+                <p>至正十二年(1352年)，余阙任淮西宣慰副使、佥都元帅府事，分兵守安庆。次年，升任都元帅，守备安庆。至正十八年(1358年)正月，陈友谅率红巾军攻安庆，余阙率军坚守数月，终因寡不敌众，城破自刎殉国，全家投井自尽。明初追谥忠宣。</p>
+                
+                <p>余阙不仅是一位忠勇的军事将领，还是著名的文学家，著有《青阳集》四卷。其文章气魄深厚，诗作沉郁悲壮，在元代文坛占有重要地位。他精通经史，工于书法，是元朝著名的学者型官员。</p>
+            </div>
+        </div>
+        
+        <!-- 历史贡献 -->
+        <div class="section">
+            <h2 class="section-title">对中华民族共同体的贡献</h2>
+            <div class="section-content">
+                <p>余阙作为党项族后裔，在元代多民族融合的历史背景下，是中华民族共同体形成的典型代表。他精通汉文化，考取进士，成为汉文化圈中的精英分子，体现了少数民族对中华主流文化的认同。</p>
+                
+                <p>在安庆任上，余阙推行"以夏变夷"政策，积极促进汉族与少数民族的文化交流。他主持修复当地儒学，兴办书院，亲自讲学，传播儒家思想，促进了民族间的文化认同。</p>
+                
+                <p>余阙以身作则，践行"忠孝节义"的儒家伦理，其忠君爱国的行为成为后世典范。明太祖朱元璋曾称赞："余阙之忠节，照耀千古"。这种精神超越了民族界限，成为中华民族共同的精神财富。</p>
+                
+                <p>在文学创作中，余阙常以"华夏一体"的视角抒发情怀，其作品中既有对本民族历史的追忆，更有对中华文明的深刻认同，体现了多元一体的民族观。他的生平事迹成为中华民族共同体意识形成过程中的重要历史见证。</p>
+            </div>
+        </div>
+        
+        <!-- 诗集展示 -->
+        <div class="section">
+            <h2 class="section-title">诗集选录</h2>
+            <div class="section-content">
+                <p>余阙的诗歌作品收录于《青阳集》中，其诗风沉郁悲壮，充满家国情怀，展现了多民族融合背景下的文化认同。以下选录部分体现中华民族共同体意识的诗作：</p>
+            </div>
+            
+            <div class="poetry-container">
+                <div class="poetry-card">
+                    <div class="poetry-title">登太平寺塔</div>
+                    <div class="poetry-content">
+                        高标跨苍穹，烈风无时休。<br>
+                        自非旷士怀，登兹翻百忧。<br>
+                        方知象教力，足可追冥搜。<br>
+                        仰穿龙蛇窟，始出枝撑幽。<br>
+                        七星在北户，河汉声西流。<br>
+                        羲和鞭白日，少昊行清秋。<br>
+                        秦山忽破碎，泾渭不可求。<br>
+                        俯视但一气，焉能辨皇州？
+                    </div>
+                </div>
+                
+                <div class="poetry-card">
+                    <div class="poetry-title">送归彦温赴河西廉使</div>
+                    <div class="poetry-content">
+                        阳关西路雪漫漫，驿使乘春送客鞍。<br>
+                        塞上风云随马动，河西星斗逼人寒。<br>
+                        汉家都护今能几，羌地诸戎昔所难。<br>
+                        莫倚雕戈轻远略，要知儒术重朝端。
+                    </div>
+                </div>
+                
+                <div class="poetry-card">
+                    <div class="poetry-title">安庆郡庠后亭宴</div>
+                    <div class="poetry-content">
+                        泮宫何巍巍，江水环其下。<br>
+                        中开数仞墙，弦诵日潇洒。<br>
+                        群贤集堂上，冠佩粲儒雅。<br>
+                        德音既孔昭，文采亦云姹。<br>
+                        斯文赖不坠，吾道其有托。<br>
+                        愿言勖诸生，努力希圣者。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>元朝名臣余阙 - 民族融合的践行者 | 中华文化传承</p>
+            <p>忠贞气节垂青史，华夷一体共春秋</p>
+        </div>
+    </div>
+    
+    <script>
+        // 创建更多花瓣
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                petal.style.animationDelay = (Math.random() * 8) + 's';
+                petal.style.opacity = Math.random() * 0.5 + 0.3;
+                petal.style.width = (Math.random() * 10 + 10) + 'px';
+                petal.style.height = petal.style.width;
+                body.appendChild(petal);
+            }
+        });
+    </script>
+</body>
+</html>

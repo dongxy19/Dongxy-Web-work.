@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拓跋什翼犍 - 北魏开国君主</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #e8d8c3 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23d4c0a1"/><path d="M0,50 Q25,40 50,50 T100,50" stroke="%23c5b190" fill="none" stroke-width="1"/></svg>');
+            font-family: 'Noto Serif SC', serif;
+            color: #5a3921;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 花瓣飘落效果 */
+        .petal {
+            position: absolute;
+            background-color: rgba(255, 200, 200, 0.5);
+            border-radius: 50% 50% 0 50%;
+            animation: fall linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 主容器 - 仿古卷轴 */
+        .scroll-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: linear-gradient(to right, #d4c0a1, #e8d8c3, #d4c0a1);
+            border: 15px solid #8b0000;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect x="0" y="0" width="40" height="40" fill="%238b0000"/><path d="M10,10 C15,5 25,5 30,10 C35,15 35,25 30,30 C25,35 15,35 10,30 C5,25 5,15 10,10 Z" fill="%23daa520" stroke="%23daa520" stroke-width="0.5"/></svg>') 30 round;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            padding: 60px 40px;
+            z-index: 10;
+        }
+        
+        /* 卷轴顶部和底部装饰 */
+        .scroll-top, .scroll-bottom {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: #8b0000;
+            z-index: 1;
+        }
+        
+        .scroll-top {
+            top: -15px;
+            border-bottom: 3px solid #daa520;
+        }
+        
+        .scroll-bottom {
+            bottom: -15px;
+            border-top: 3px solid #daa520;
+        }
+        
+        /* 标题样式 */
+        .title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .title h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 5px;
+        }
+        
+        .title h2 {
+            font-size: 1.5rem;
+            color: #5a3921;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+        
+        .title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #8b0000, transparent);
+        }
+        
+        /* 内容区域 */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        /* 左侧信息卡片 */
+        .info-card {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #8b0000;
+            border-radius: 5px;
+            padding: 25px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-card h3 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2rem;
+            color: #8b0000;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #daa520;
+            padding-bottom: 10px;
+        }
+        
+        .info-item {
+            margin: 15px 0;
+            display: flex;
+            border-bottom: 1px dashed #c5b190;
+            padding-bottom: 10px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            width: 120px;
+            color: #5a3921;
+        }
+        
+        .info-value {
+            flex: 1;
+            color: #8b0000;
+        }
+        
+        /* 右侧图片 */
+        .portrait-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .portrait-frame {
+            width: 300px;
+            height: 400px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect x="10" y="10" width="280" height="380" rx="5" fill="%23f0e6d2" stroke="%238b0000" stroke-width="2"/><path d="M20,20 L280,20 L280,380 L20,380 Z" fill="none" stroke="%23daa520" stroke-width="1" stroke-dasharray="5,5"/></svg>');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .portrait {
+            width: 250px;
+            height: 350px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Emperor_Toba_Shiyijian.jpg/800px-Emperor_Toba_Shiyijian.jpg?20220328020158') center/cover;
+            border: 2px solid #8b0000;
+            filter: sepia(0.3) contrast(1.1);
+        }
+        
+        /* 详细内容区域 */
+        .detail-section {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #8b0000;
+            border-radius: 5px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .detail-section h3 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2rem;
+            color: #8b0000;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #daa520;
+        }
+        
+        .detail-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .poetry {
+            background: rgba(240, 230, 210, 0.7);
+            border-left: 4px solid #8b0000;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            line-height: 2;
+        }
+        
+        .poetry .author {
+            text-align: right;
+            margin-top: 10px;
+            font-style: normal;
+            color: #5a3921;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #5a3921;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #c5b190;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .scroll-container {
+                padding: 40px 20px;
+            }
+            
+            .title h1 {
+                font-size: 2.5rem;
+            }
+            
+            .info-card, .portrait-container {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 花瓣飘落效果 -->
+    <div id="petals-container"></div>
+    
+    <!-- 卷轴主容器 -->
+    <div class="scroll-container">
+        <div class="scroll-top"></div>
+        <div class="scroll-bottom"></div>
+        
+        <!-- 标题 -->
+        <div class="title">
+            <h1>拓跋什翼犍</h1>
+            <h2>北魏王朝奠基者 · 民族融合先驱</h2>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- 左侧信息卡片 -->
+            <div class="info-card">
+                <h3>人物档案</h3>
+                <div class="info-item">
+                    <span class="info-label">姓　　名：</span>
+                    <span class="info-value">拓跋什翼犍</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">所属朝代：</span>
+                    <span class="info-value">十六国时期（代国）</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">出生地点：</span>
+                    <span class="info-value">代郡（今山西大同）</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">所属民族：</span>
+                    <span class="info-value">鲜卑族</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">性　　别：</span>
+                    <span class="info-value">男</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">职　　务：</span>
+                    <span class="info-value">代国国王（公元338年-376年）</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">称　　号：</span>
+                    <span class="info-value">昭成皇帝（北魏追谥）</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">在位时间：</span>
+                    <span class="info-value">公元338年-376年</span>
+                </div>
+            </div>
+            
+            <!-- 右侧画像 -->
+            <div class="portrait-container">
+                <div class="portrait-frame">
+                     <img src="images/拓跋什翼犍.png" >
+                    <div class="portrait"></div>
+                </div>
+                <p>北魏开国君主拓跋什翼犍画像</p>
+            </div>
+        </div>
+        
+        <!-- 人物生平 -->
+        <div class="detail-section">
+            <h3>人物生平</h3>
+            <div class="detail-content">
+                <p>拓跋什翼犍（公元320年-376年），鲜卑族拓跋部首领，代国建立者拓跋猗卢之孙，南北朝时期北魏王朝奠基人。少年时曾作为人质在后赵生活十年，深受中原文化影响。</p>
+                
+                <p>公元338年，拓跋什翼犍即代王位，定都盛乐（今内蒙古和林格尔）。他在位期间推行了一系列重要改革：</p>
+                
+                <ul>
+                    <li>仿效中原王朝建立年号"建国"，设置百官制度</li>
+                    <li>制定法律，创建国家机构雏形</li>
+                    <li>发展农业，促进鲜卑族从游牧向农耕转变</li>
+                    <li>与周边民族通婚，促进民族融合</li>
+                    <li>吸纳汉族士人参与政权管理</li>
+                </ul>
+                
+                <p>公元376年，前秦苻坚发兵攻打代国，代国灭亡，拓跋什翼犍被其子拓跋寔君所杀。其孙拓跋珪后来重建代国，改国号为魏，建立北魏王朝，追谥什翼犍为昭成皇帝。</p>
+            </div>
+        </div>
+        
+        <!-- 历史贡献 -->
+        <div class="detail-section">
+            <h3>民族融合贡献</h3>
+            <div class="detail-content">
+                <p>拓跋什翼犍作为鲜卑族杰出领袖，对中华民族共同体的形成作出了重要贡献：</p>
+                
+                <p><strong>1. 文化融合先驱：</strong>在后赵为人质期间系统学习汉族文化，即位后积极推行汉化政策，促进鲜卑文化与中原文明的融合。</p>
+                
+                <p><strong>2. 制度创新：</strong>打破部落联盟旧制，参照中原王朝建立国家机构，设官分职，制定法律，为后来北魏孝文帝改革奠定基础。</p>
+                
+                <p><strong>3. 经济转型：</strong>改变鲜卑游牧传统，鼓励农业生产，发展定居经济，促进北方经济形态的转变。</p>
+                
+                <p><strong>4. 民族通婚：</strong>主动与汉族、匈奴等民族联姻，打破民族隔阂，为多民族共同发展创造有利条件。</p>
+                
+                <p><strong>5. 人才政策：</strong>广泛吸纳汉族士人参与政权管理，如重用汉人燕凤、许谦等人，开创了北魏"胡汉共治"的先河。</p>
+                
+                <p>拓跋什翼犍的治国实践，为后来北魏统一北方、促进民族大融合开辟了道路，是中华民族形成过程中的重要推动者。</p>
+            </div>
+        </div>
+        
+        <!-- 相关诗歌 -->
+        <div class="detail-section">
+            <h3>相关诗歌典籍</h3>
+            <div class="detail-content">
+                <p>关于拓跋什翼犍及其历史贡献，后世多有诗作传颂：</p>
+                
+                <div class="poetry">
+                    《咏代王》
+                    <br>北地雄主起云中，什翼犍名震朔方。
+                    <br>建国改制开新制，胡汉交融谱华章。
+                    <br>虽遭秦兵国祚断，孙辈重兴魏业昌。
+                    <br>昭成奠基千秋颂，民族融合万代长。
+                    <div class="author">—— 当代 · 史咏</div>
+                </div>
+                
+                <div class="poetry">
+                    《北魏溯源》
+                    <br>盛乐城头王气生，拓跋代国初长成。
+                    <br>什翼犍立百官制，汉家文化渐北行。
+                    <br>胡风汉韵相交汇，农牧相济启文明。
+                    <br>若非昭成奠基业，何来孝文改革名。
+                    <div class="author">—— 选自《中华史诗》</div>
+                </div>
+                
+                <div class="poetry">
+                    《读魏书·序纪有感》
+                    <br>代北雄杰什翼犍，十年赵地习华篇。
+                    <br>归乡建制开新宇，立法安民拓土田。
+                    <br>胡汉通婚消旧界，农牧并举写新笺。
+                    <br>虽遭祸乱身先死，孙起平城续帝缘。
+                    <div class="author">—— 今人 · 李慕北</div>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+    
+    <script>
+        // 创建花瓣飘落效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const petalsContainer = document.getElementById('petals-container');
+            const petalCount = 25;
+            
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                // 随机设置花瓣大小
+                const size = Math.random() * 20 + 10;
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size}px`;
+                
+                // 随机设置花瓣位置
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.top = `-${size}px`;
+                
+                // 随机设置花瓣颜色
+                const hue = Math.floor(Math.random() * 20 + 340);
+                petal.style.backgroundColor = `hsla(${hue}, 70%, 80%, ${Math.random() * 0.5 + 0.3})`;
+                
+                // 随机设置动画时长
+                const duration = Math.random() * 10 + 10;
+                petal.style.animationDuration = `${duration}s`;
+                
+                // 随机设置动画延迟
+                const delay = Math.random() * 5;
+                petal.style.animationDelay = `${delay}s`;
+                
+                petalsContainer.appendChild(petal);
+            }
+            
+            // 卷轴展开动画
+            const scrollContainer = document.querySelector('.scroll-container');
+            setTimeout(() => {
+                scrollContainer.style.transform = 'scale(1)';
+                scrollContainer.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

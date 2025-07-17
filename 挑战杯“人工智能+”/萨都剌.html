@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萨都剌 - 元代民族融合的文化使者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #8c1d18;
+            --secondary: #d4a55e;
+            --dark: #5a3e36;
+            --light: #f5f0e1;
+            --paper: #fffcf2;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23f5f0e1"/><path d="M20,20 Q40,5 60,20 T100,20 T140,20 T180,20 V180 H20 Z" fill="%23d4c4a1" opacity="0.2"/></svg>');
+            background-size: cover;
+            color: var(--dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q40,5 60,20 T100,20" stroke="%23d4a55e" stroke-width="0.5" fill="none" opacity="0.1"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            color: var(--primary);
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--dark);
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .subtitle::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+        
+        .decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .floating {
+            position: absolute;
+            animation: float 8s infinite ease-in-out;
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+        
+        .floating:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
+        .floating:nth-child(2) { top: 25%; right: 12%; animation-delay: 1s; }
+        .floating:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 2s; }
+        .floating:nth-child(4) { bottom: 15%; right: 8%; animation-delay: 3s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-card {
+            background: rgba(255, 252, 242, 0.92);
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 165, 94, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+        
+        .info-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .section-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--primary);
+            text-align: right;
+            position: relative;
+            padding-right: 15px;
+        }
+        
+        .info-label::after {
+            content: ":";
+            position: absolute;
+            right: 5px;
+        }
+        
+        .info-value {
+            padding-left: 10px;
+            border-left: 2px solid var(--secondary);
+        }
+        
+        .portrait-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .portrait-frame {
+            width: 320px;
+            height: 400px;
+            background: linear-gradient(135deg, #e8d6c3, #d4c4a1);
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .portrait-frame:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .portrait-img {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(212, 165, 94, 0.1), rgba(212, 165, 94, 0.1)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="400" viewBox="0 0 320 400"><rect width="320" height="400" fill="%23d4c4a1"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Noto Serif SC" font-size="28" fill="%235a3e36">元代诗人画像</text></svg>');
+            background-size: cover;
+            position: relative;
+        }
+        
+        .portrait-frame::before,
+        .portrait-frame::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary);
+            opacity: 0.3;
+        }
+        
+        .portrait-frame::before {
+            top: 15px;
+            left: 15px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .portrait-frame::after {
+            bottom: 15px;
+            right: 15px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        .timeline-section {
+            background: rgba(255, 252, 242, 0.92);
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 165, 94, 0.3);
+            margin: 50px 0;
+            position: relative;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 50%;
+            padding: 0 50px;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            border: 1px solid rgba(212, 165, 94, 0.3);
+        }
+        
+        .timeline-content::before {
+            content: "";
+            position: absolute;
+            top: 25px;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -57px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -57px;
+        }
+        
+        .year {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: inline-block;
+            background: rgba(212, 165, 94, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        
+        .contribution-section {
+            background: rgba(255, 252, 242, 0.92);
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 165, 94, 0.3);
+            margin: 50px 0;
+        }
+        
+        .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 30px 0 40px;
+            padding: 25px;
+            background: rgba(212, 165, 94, 0.12);
+            border-radius: 8px;
+            position: relative;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-left: 4px solid var(--primary);
+        }
+
+        
+        .contrib-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .contrib-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--primary);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contrib-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .contrib-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .contrib-title {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .poetry-section {
+            background: rgba(255, 252, 242, 0.92);
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 165, 94, 0.3);
+            margin: 50px 0;
+        }
+        
+        .poem-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .poem-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 165, 94, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .poem-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            clip-path: polygon(0 0, 100% 100%, 100% 0);
+            opacity: 0.1;
+        }
+        
+        .poem-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .poem-title {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 165, 94, 0.3);
+            text-align: center;
+        }
+        
+        .poem-content {
+            font-style: italic;
+            line-height: 2;
+            text-align: center;
+            margin-top: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .poem-dynasty {
+            text-align: center;
+            margin-top: 15px;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(212, 165, 94, 0.3);
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .seal {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 5px;
+            margin: 20px auto;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: var(--light);
+            font-size: 2.5rem;
+            line-height: 80px;
+            text-align: center;
+            transform: rotate(15deg);
+            opacity: 0.9;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+                letter-spacing: 5px;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                left: 0;
+                padding-right: 20px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before {
+                left: -57px;
+                right: auto;
+            }
+        }
+        
+        /* 花瓣动画 */
+        .petal {
+            position: fixed;
+            top: -50px;
+            z-index: -1;
+            font-size: 2rem;
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 飘落的花瓣 -->
+    <div class="petals-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="decoration">
+                <div class="floating">📜</div>
+                <div class="floating">🖋️</div>
+                <div class="floating">🌸</div>
+                <div class="floating">🎐</div>
+            </div>
+            <h1 class="title">萨都剌</h1>
+            <p class="subtitle">元代回回诗人 · 中华文化融合的杰出代表</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="info-card">
+                <h2 class="section-title">人物简介</h2>
+                <div class="info-grid">
+                    <div class="info-label">姓名</div>
+                    <div class="info-value">萨都剌（字天锡，号直斋）</div>
+                    
+                    <div class="info-label">所属朝代</div>
+                    <div class="info-value">元朝（1271年-1368年）</div>
+                    
+                    <div class="info-label">出生地</div>
+                    <div class="info-value">代州雁门（今山西代县）</div>
+                    
+                    <div class="info-label">所属民族</div>
+                    <div class="info-value">回回人（色目人）</div>
+                    
+                    <div class="info-label">性别</div>
+                    <div class="info-value">男</div>
+                    
+                    <div class="info-label">职务</div>
+                    <div class="info-value">镇江录事司达鲁花赤、江南行御史台掾史、燕南河北道肃政廉访司照磨</div>
+                </div>
+            </div>
+            
+            <div class="portrait-container">
+                <div class="portrait">
+                   <img src="images/萨都剌.png" alt="萨都剌画像">
+                </div>
+                <p>萨都剌画像</p>
+            </div>
+        </div>
+        
+        <div class="timeline-section">
+            <h2 class="section-title">人物生平</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">约1272年</div>
+                        <p>萨都剌出生于代州雁门（今山西代县）一个回回家庭，其先祖为西域回回人（色目人），随蒙古军东来。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">1307年</div>
+                        <p>因家族衰落，家境贫困，曾远赴吴楚经商谋生，这段经历为他后来的创作积累了丰富的生活素材。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">1327年</div>
+                        <p>以55岁高龄中进士，成为元代恢复科举后首批进士之一，展现了色目人在汉文化上的深厚造诣。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">1330-1340年</div>
+                        <p>历任镇江录事司达鲁花赤、江南行御史台掾史、燕南河北道肃政廉访司照磨等职，为官清正，关心民生。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">1343年</div>
+                        <p>在文学创作上达到巅峰，创作了大量反映社会现实、描绘自然风光的诗词作品，成为元代诗坛的代表人物。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="year">约1355年</div>
+                        <p>逝世于杭州，享年约83岁。其作品《雁门集》流传后世，成为中华文学宝库中的重要组成部分。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contribution-section">
+            <h2 class="section-title">对中华民族共同体的贡献</h2>
+            <div class="quote">
+                "中华一体，四海同风" — 萨都剌以其文学创作实践了多民族文化的深度融合，成为元代民族交融的典范
+            </div>
+            
+            <div class="contrib-grid">
+                <div class="contrib-card">
+                    <div class="contrib-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="contrib-title">文化融合典范</h3>
+                    <p>作为回回人却精通汉文化，其诗词创作完全融入汉文学传统，成为元代民族融合的文化象征。</p>
+                </div>
+                
+                <div class="contrib-card">
+                    <div class="contrib-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="contrib-title">促进民族交流</h3>
+                    <p>通过诗词创作展现各民族生活风貌，促进不同民族间的相互了解和尊重，打破文化隔阂。</p>
+                </div>
+                
+                <div class="contrib-card">
+                    <div class="contrib-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 class="contrib-title">文化传承创新</h3>
+                    <p>将西域文化元素融入中华传统诗词创作，丰富了中华文化的表现形式和内涵。</p>
+                </div>
+                
+                <div class="contrib-card">
+                    <div class="contrib-icon">
+                        <i class="fas fa-monument"></i>
+                    </div>
+                    <h3 class="contrib-title">历史见证记录</h3>
+                    <p>其作品真实记录了元代多民族社会的生活图景，为研究中华民族共同体形成提供了珍贵史料。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="poetry-section">
+            <h2 class="section-title">代表诗作</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">萨都剌著有《雁门集》，其诗作融合了多民族文化的特色，体现了中华民族共同体的精神内涵：</p>
+            
+            <div class="poem-list">
+                <div class="poem-card">
+                    <div class="poem-title">《上京即事》</div>
+                    <div class="poem-content">
+                        牛羊散漫落日下，<br>
+                        野草生香乳酪甜。<br>
+                        卷地朔风沙似雪，<br>
+                        家家行帐下毡帘。
+                    </div>
+                    <div class="poem-dynasty">—— 元 · 萨都剌</div>
+                </div>
+                
+                <div class="poem-card">
+                    <div class="poem-title">《过嘉兴》</div>
+                    <div class="poem-content">
+                        三山云海几千里，<br>
+                        十幅蒲帆挂烟水。<br>
+                        吴中过客莫思家，<br>
+                        江南画船如屋里。
+                    </div>
+                    <div class="poem-dynasty">—— 元 · 萨都剌</div>
+                </div>
+                
+                <div class="poem-card">
+                    <div class="poem-title">《彭城杂咏》</div>
+                    <div class="poem-content">
+                        雪白杨花拍马头，<br>
+                        行人春尽过徐州。<br>
+                        夜深一片城头月，<br>
+                        曾照张家燕子楼。
+                    </div>
+                    <div class="poem-dynasty">—— 元 · 萨都剌</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="seal">文</div>
+            <p>© 2023 中华历史文化传承 | 萨都剌专题研究</p>
+
+            <p style="margin-top: 15px; opacity: 0.8;">"江山代有才人出，各领风骚数百年" — 致敬中华多元一体的文化传承</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 创建花瓣飘落效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.petals-container');
+            const types = ['🌸', '🍂', '❀', '✿', '🌺', '🌼'];
+            
+            for (let i = 0; i < 20; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.innerHTML = types[Math.floor(Math.random() * types.length)];
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                petal.style.opacity = Math.random() * 0.5 + 0.3;
+                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(petal);
+            }
+        });
+    </script>
+</body>
+</html>

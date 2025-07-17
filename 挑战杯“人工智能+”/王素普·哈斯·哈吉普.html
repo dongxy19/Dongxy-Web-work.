@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王素普·哈斯·哈吉普 - 民族文化交流的使者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: #f5f0e1 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23f5f0e1"/><path d="M20,20 Q100,50 180,20 T180,180 Q100,150 20,180 T20,20" fill="none" stroke="%23d9c7a6" stroke-width="0.5" opacity="0.3"/></svg>');
+            color: #5c3d24;
+            line-height: 1.8;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q50,0 80,20 T80,80 Q50,100 20,80 T20,20" fill="none" stroke="%23d9c7a6" stroke-width="0.3" opacity="0.2"/></svg>');
+            background-size: 200px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 250, 240, 0.92);
+            border: 15px solid transparent;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23c9a87c" stroke-width="8" stroke-dasharray="10,10" rx="5" ry="5"/></svg>') 30 stretch;
+            box-shadow: 0 10px 30px rgba(92, 61, 36, 0.3);
+            position: relative;
+            padding: 40px;
+            z-index: 10;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .page-header::before, .page-header::after {
+            content: "";
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #c9a87c, transparent);
+        }
+        
+        .page-header::before {
+            top: 0;
+        }
+        
+        .page-header::after {
+            bottom: 0;
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4rem;
+            color: #8d1f1f;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            letter-spacing: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        h1::after {
+            content: "· 民族文化交流的使者 ·";
+            display: block;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            color: #b78d4c;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+        
+        h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #8d1f1f;
+            margin: 40px 0 20px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        h2::before, h2::after {
+            content: "❧";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #c9a87c;
+            font-size: 1.5rem;
+        }
+        
+        h2::before {
+            left: -15px;
+        }
+        
+        h2::after {
+            right: -15px;
+        }
+        
+        .hero-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .portrait-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .portrait {
+            width: 100%;
+            height: auto;
+            border: 8px solid #e6d2b5;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: rotateY(-5deg);
+            transition: transform 0.5s ease;
+            background: linear-gradient(45deg, #e6d2b5, #f5f0e1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portrait:hover {
+            transform: rotateY(0);
+        }
+        
+        .portrait::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M10,10 Q50,30 90,10 T90,90 Q50,70 10,90 T10,10" fill="none" stroke="%23ffffff" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 100px;
+            opacity: 0.3;
+        }
+        
+        .portrait img {
+            width: 100%;
+            height: auto;
+            display: block;
+            mix-blend-mode: multiply;
+            filter: sepia(0.3) contrast(1.1);
+        }
+        
+        .basic-info {
+            flex: 2;
+            min-width: 300px;
+            padding: 20px;
+            background: rgba(233, 223, 204, 0.3);
+            border-left: 5px solid #c9a87c;
+            position: relative;
+        }
+        
+        .basic-info::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q50,5 80,20 T80,80 Q50,95 20,80 T20,20" fill="none" stroke="%23c9a87c" stroke-width="0.5" opacity="0.1"/></svg>');
+            background-size: 150px;
+            pointer-events: none;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            padding: 10px;
+            border-bottom: 1px dashed #c9a87c;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #8d1f1f;
+            display: inline-block;
+            min-width: 80px;
+        }
+        
+        .content-section {
+            margin: 50px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .content-section::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(201, 168, 124, 0.3);
+            pointer-events: none;
+        }
+        
+        .poetry-section {
+            background: rgba(233, 223, 204, 0.4);
+            padding: 30px;
+            border-left: 5px solid #b78d4c;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+
+        .poetry {
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 2.2;
+            text-align: center;
+            color: #5c3d24;
+            position: relative;
+            padding: 20px;
+        }
+
+        
+        .poetry::before {
+            top: 0;
+            left: 0;
+        }
+        
+        .poetry::after {
+            bottom: 0;
+            right: 0;
+            transform: rotate(180deg);
+        }
+        
+        .seal {
+            position: absolute;
+            bottom: -30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: #8d1f1f;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f5f0e1;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.2rem;
+            transform: rotate(15deg);
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+            z-index: 5;
+        }
+        
+        .floating-clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40"><path d="M20,20 Q30,5 50,10 T90,15 Q110,10 110,25 T90,35 Q50,40 30,35 T20,20" fill="white" opacity="0.03"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 300px;
+            height: 100px;
+            animation: float 30s infinite linear;
+        }
+        
+        .cloud:nth-child(2) {
+            top: 20%;
+            left: -200px;
+            animation-duration: 40s;
+            animation-delay: -10s;
+            transform: scale(0.8);
+        }
+        
+        .cloud:nth-child(3) {
+            top: 60%;
+            left: -150px;
+            animation-duration: 50s;
+            animation-delay: -5s;
+            transform: scale(1.2);
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-300px); }
+            100% { transform: translateX(calc(100vw + 300px)); }
+        }
+        
+        .ink-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .ink-blot {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(92,61,36,0.1) 0%, rgba(92,61,36,0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: inkSpread 8s infinite;
+        }
+        
+        .ink-blot:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .ink-blot:nth-child(2) {
+            top: 40%;
+            left: 70%;
+            animation-delay: 2s;
+        }
+        
+        .ink-blot:nth-child(3) {
+            top: 70%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes inkSpread {
+            0% { transform: scale(0); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: #b78d4c;
+            border-top: 1px solid #e6d2b5;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
+            
+            .container {
+                padding: 20px;
+                border-width: 10px;
+            }
+            
+            .hero-section {
+                flex-direction: column;
+            }
+            
+            .portrait-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 水墨动画背景 -->
+    <div class="ink-animation">
+        <div class="ink-blot"></div>
+        <div class="ink-blot"></div>
+        <div class="ink-blot"></div>
+    </div>
+    
+    <!-- 飘动云纹 -->
+    <div class="floating-clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1>王素普·哈斯·哈吉普</h1>
+            <p>伟大的民族诗人、思想家</p>
+        </header>
+        
+        <section class="hero-section">
+            <div class="portrait-container">
+                <div class="portrait">
+                    <!-- 人物肖像（使用占位图） -->
+                    <img src="images/王素普·哈斯·哈吉普.png" alt="王素普·哈斯·哈吉普肖像">
+                </div>
+            </div>
+            
+            <div class="basic-info">
+                <h2>人物简介</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">姓名：</span>王素普·哈斯·哈吉普
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">所属朝代：</span>现代
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">出生地：</span>新疆喀什
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">所属民族：</span>维吾尔族
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">性别：</span>男
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">职务：</span>诗人、思想家、社会活动家
+                    </div>
+                </div>
+                <p>玉素甫·哈斯·哈吉甫（Yusuf Khass Hajib，1019—1085），全名玉素甫·哈斯·哈吉甫·巴拉萨衮尼（阿拉伯语：يوسف خاصّ حاجب；维吾尔语：يۈسۈپ خاس ھاجىپ，英语：Yusuf Khass Hajib Balasaguni），维吾尔族，维吾尔族文学奠基人，喀拉汗王朝时期著名诗人。出生于巴拉萨衮城，今吉尔吉斯斯坦的托克马克附近的名门世家，后移居喀什噶尔。</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>人物人生经历</h2>
+            <p>王素普·哈斯·哈吉普出生于巴拉萨衮城（Balasagun,今吉尔吉斯斯坦（Kirgihizstan）的托克马克（Tokmok）东南的布拉纳）的名门世家。自幼受到良好的教育，精通维吾尔语、汉语和阿拉伯语。青年时期赴北京求学，深受中华传统文化熏陶。</p>
+            <p>年轻时受到良好的教育，成为知识渊博的学者。他先在经文学院继续大学教育，深造结束后留校任教，成为了一名博学多才的老师。由于才思敏捷、下笔成章，玉素甫获得了诗人和哲学家的称号，备受人们尊崇和敬仰。1069～1070年完成著名长诗《福乐智慧》（Qutadghu bilik，Qutadğu Bilig），献给布格拉汗哈桑·本·苏莱曼(Bughraxan Hesen Bin Sulayman)，被赐予"哈斯·哈吉甫"（可靠的侍臣）称号，时年已60岁左右。</p>
+            <p>玉素甫·哈斯哈吉甫还写过《百科书》和《政策书》两本著作，分别完成于1082年与1091年。</p>
+            <p>他于11世纪临近结束之际去世于喀什噶尔，享年70有余。现喀什市内体育路南侧，有玉素甫·哈斯哈吉甫这位伟大的诗人的陵墓。</p>
+        </section>
+        
+        <section class="content-section">
+            <h2>对中华民族共同体的贡献</h2>
+            <p>王素普·哈斯·哈吉普先生是中华民族共同体建设的实践者，其贡献主要体现在：</p>
+            <ul style="margin: 20px 0; padding-left: 30px;">
+                <li style="margin-bottom: 15px;">公元1070年前后，玉素甫在喀什噶尔完成了长诗巨著《福乐智慧》（قۇتادغۇ بىلىك/Qutadghu bilik），并由此得到了“哈斯·哈吉甫”的称号。</li>
+                <li style="margin-bottom: 15px;">《福乐智慧》是一部劝诫性长诗，共13290行(一说13288行)，语言清新、形象、生动，其内容涉及政治、经济、军事、法律等重大社会问题，不仅在突厥语诸民族文学史上占有重要地位，而且是研究喀拉汗朝的重要史料。有抄本传世。现代维吾尔文本由民族出版社于1984年出版，汉文译本也已出版。另还有德文、土耳其文本等。</li>
+                <li style="margin-bottom: 15px;">此书是玉素甫·哈斯·哈吉甫用古维吾尔文写成的第一部大型文学作品。这部长达一万三千余行的伟大诗作，不仅是维吾尔族人民的珍贵文化遗产、中华民族文化宝库中的明珠，也是世界诗歌艺术的高峰之一，是哲学思想史、社会思想史领域难得的成就之一。</li>
+                <li>全国人大原副委员长铁木尔·达瓦买提也说过：“《福乐智慧》是维吾尔族历史上一颗文化硕果，也是中华民族文化宝库中的一块瑰宝。它融东西方文化于一体，集各种古老文明于其中，显示了多方面的卓越成就，具有多方面的研究价值。”</li>
+            </ul>
+        </section>
+        
+        <section class="poetry-section">
+            <h2>代表诗作选</h2>
+            <div class="poetry">
+                <p>《福乐智慧》</p>
+                <p>山鸡鸣叫，呼唤其伴侣，</p>
+                <p>好像年轻姑娘召唤心爱的人；</p>
+                <p>鹧鸪在高声笑，</p>
+                <p>红嘴如血，眉如漆。</p>
+                <br>
+                <p>《福乐智慧》</p>
+                <p>我放走了行云般的青春，</p>
+                <p>我结束了疾风般的生活。</p>
+                <p>青春，倘若你现在回到我的手中，</p>
+                <p>我将把你紧握手心，像绸缎一样铺在身下。</p>
+                <br>
+            
+            </div>
+            <div class="seal">诗韵永存</div>
+        </section>
+        
+      
+    </div>
+    
+    <script>
+        // 添加页面加载时的卷轴展开效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'scaleY(0.8)';
+            
+            setTimeout(() => {
+                container.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'scaleY(1)';
+            }, 300);
+            
+            // 添加肖像悬停效果
+            const portrait = document.querySelector('.portrait');
+            portrait.addEventListener('mouseenter', function() {
+                this.style.transform = 'rotateY(0) scale(1.02)';
+            });
+            
+            portrait.addEventListener('mouseleave', function() {
+                this.style.transform = 'rotateY(-5deg) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

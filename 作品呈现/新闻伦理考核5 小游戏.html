@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心灵桥梁 - 家庭沟通训练营</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1a33, #1a3a5f);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 背景装饰 */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(79, 195, 247, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 25%);
+            z-index: -1;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #0d47a1, #1a237e);
+            padding: 25px 40px;
+            text-align: center;
+            border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #e3f2fd;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 15px auto 0;
+            line-height: 1.6;
+            color: #bbdefb;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 40, 85, 0.7);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4fc3f7;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .game-container {
+            display: flex;
+            min-height: 600px;
+            position: relative;
+        }
+        
+        .scenario-section {
+            flex: 1;
+            padding: 30px;
+            background: rgba(0, 20, 40, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .scene-indicator {
+            background: rgba(0, 60, 120, 0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        
+        .scene-indicator i {
+            margin-right: 10px;
+            color: #4fc3f7;
+        }
+        
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .scenario-header i {
+            font-size: 2rem;
+            color: #4fc3f7;
+            margin-right: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #81d4fa;
+            letter-spacing: 0.5px;
+        }
+        
+        .scenario-content {
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            flex: 1;
+            border: 1px solid rgba(100, 181, 246, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .character {
+            display: flex;
+            margin-bottom: 30px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        
+        .character.active {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 10px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2.5rem;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+        
+        .emotion-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid white;
+        }
+        
+        .mom .avatar {
+            background: linear-gradient(135deg, #8e24aa, #e91e63);
+        }
+        
+        .son .avatar {
+            background: linear-gradient(135deg, #0288d1, #26c6da);
+        }
+        
+        .dialogue-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .name-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            align-self: flex-start;
+            font-weight: 500;
+        }
+        
+        .dialogue {
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            animation: fadeIn 0.5s ease;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mom .dialogue {
+            background: rgba(142, 36, 170, 0.3);
+            border: 1px solid rgba(142, 36, 170, 0.5);
+        }
+        
+        .son .dialogue {
+            background: rgba(2, 136, 209, 0.3);
+            border: 1px solid rgba(2, 136, 209, 0.5);
+        }
+        
+        .dialogue::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 15px 10px 0;
+            border-color: transparent rgba(142, 36, 170, 0.5) transparent transparent;
+            left: -15px;
+            top: 20px;
+        }
+        
+        .son .dialogue::before {
+            border-color: transparent rgba(2, 136, 209, 0.5) transparent transparent;
+        }
+        
+        .response-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .response-btn {
+            background: rgba(0, 60, 120, 0.7);
+            border: 1px solid rgba(100, 181, 246, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            font-size: 1rem;
+        }
+        
+        .response-btn:hover {
+            background: rgba(0, 90, 180, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .response-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            min-width: 25px;
+            color: #4fc3f7;
+        }
+        
+        .options-section {
+            width: 380px;
+            padding: 30px;
+            background: rgba(0, 20, 40, 0.6);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .options-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .options-header i {
+            font-size: 2rem;
+            color: #4fc3f7;
+            margin-right: 15px;
+        }
+        
+        .emotion-meter {
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(100, 181, 246, 0.3);
+        }
+        
+        .meter-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #81d4fa;
+        }
+        
+        .meter-bar {
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .meter-fill {
+            height: 100%;
+            width: 70%;
+            background: linear-gradient(90deg, #e53935, #ff9800, #4caf50);
+            border-radius: 15px;
+            transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .meter-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .relationship-section {
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(100, 181, 246, 0.3);
+        }
+        
+        .achievements {
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            flex: 1;
+            border: 1px solid rgba(100, 181, 246, 0.3);
+        }
+        
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .achievement-item {
+            background: rgba(0, 40, 85, 0.7);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+        
+        .achievement-item.unlocked {
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.3);
+        }
+        
+        .achievement-item i {
+            font-size: 2rem;
+            color: #ffd54f;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-title {
+            font-size: 0.8rem;
+        }
+        
+        .progress-section {
+            padding: 20px 40px;
+            background: linear-gradient(90deg, #0d47a1, #1a237e);
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-container {
+            flex: 1;
+            margin-right: 30px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #bbdefb;
+        }
+        
+        .progress-bar {
+            height: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, #00bcd4, #4fc3f7);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: width 0.7s ease;
+        }
+        
+        .progress-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        .scenario-nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-btn i {
+            margin-right: 8px;
+        }
+        
+        .nav-btn.primary {
+            background: linear-gradient(135deg, #00bcd4, #0288d1);
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+        }
+        
+        .nav-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 188, 212, 0.5);
+        }
+        
+        .resources {
+            padding: 25px 40px;
+            background: rgba(0, 60, 120, 0.6);
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .resources h3 {
+            color: #81d4fa;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+        }
+        
+        .resources h3 i {
+            margin-right: 15px;
+            font-size: 1.6rem;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .resource-item {
+            background: rgba(0, 40, 85, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .resource-item i {
+            color: #4fc3f7;
+            margin-right: 15px;
+            font-size: 2rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .resource-text {
+            flex: 1;
+        }
+        
+        .resource-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .resource-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .game-info {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 992px) {
+            .game-container {
+                flex-direction: column;
+            }
+            
+            .options-section {
+                width: 100%;
+            }
+            
+            .response-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .progress-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .progress-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            
+            .scenario-nav {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats-bar {
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                flex: 1 0 50%;
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        .bounce {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+        
+        /* 案例事实面板 */
+        .case-facts {
+            background: rgba(0, 40, 85, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #e53935;
+        }
+        
+        .case-facts h3 {
+            color: #ff8a65;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .case-facts h3 i {
+            margin-right: 10px;
+        }
+        
+        .fact-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .fact-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4fc3f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bg-pattern"></div>
+        
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-heartbeat"></i> 心灵桥梁</h1>
+                <p class="subtitle">家庭沟通训练营 - 基于上海4·17事件的互动体验</p>
+            </div>
+        </header>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">82%</div>
+                <div class="stat-label">玩家沟通技巧提升</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3.5M</div>
+                <div class="stat-label">模拟对话已完成</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">94%</div>
+                <div class="stat-label">参与者推荐率</div>
+            </div>
+        </div>
+        
+        <div class="game-container">
+            <div class="scenario-section">
+                <div class="scene-indicator">
+                    <i class="fas fa-car"></i> 场景 1：车内对话 (进行中)
+                </div>
+                
+                <div class="scenario-header">
+                    <i class="fas fa-scroll pulse"></i>
+                    <h2>当前情景模拟</h2>
+                </div>
+                
+                <div class="scenario-content">
+                    <div class="character mom active">
+                        <div class="avatar">
+                            <i class="fas fa-female"></i>
+                            <div class="emotion-indicator">😠</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">妈妈 (张女士)</div>
+                            <div class="dialogue">
+                                老师今天又打电话了，说你在学校跟同学打架。这已经是这学期第三次了！你什么时候才能懂事？
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character son">
+                        <div class="avatar">
+                            <i class="fas fa-male"></i>
+                            <div class="emotion-indicator">😔</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">小明 (17岁)</div>
+                            <div class="dialogue">
+                                是他们先惹我的... 你总是这样，根本不听我解释！
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="response-options">
+                        <div class="response-btn" onclick="selectResponse(1)">
+                            <i class="fas fa-1"></i>
+                            <div>你总是惹麻烦！现在回家给我写检讨，周末不准出门！</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(2)">
+                            <i class="fas fa-2"></i>
+                            <div>打架能解决问题吗？我每天辛苦工作就是让你在学校闹事？</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(3)">
+                            <i class="fas fa-3"></i>
+                            <div>告诉我发生了什么？你当时是什么感受？</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(4)">
+                            <i class="fas fa-4"></i>
+                            <div>看起来你很生气，能跟我聊聊发生了什么吗？</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 案例事实面板 -->
+                    <div class="case-facts">
+                        <h3><i class="fas fa-exclamation-circle"></i> 基于真实案例</h3>
+                        <div class="fact-item">2019年4月17日晚，上海卢浦大桥发生17岁男孩跳桥事件</div>
+                        <div class="fact-item">起因是男孩在学校与同学发生矛盾，母亲在车内批评孩子</div>
+                        <div class="fact-item">事件后上海市开通24小时心理援助专线</div>
+                        <div class="fact-item">本游戏旨在帮助家庭避免类似悲剧</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="options-section">
+                <div class="options-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>情绪与关系监测</h2>
+                </div>
+                
+                <div class="emotion-meter">
+                    <div class="meter-header">
+                        <span>小明情绪状态</span>
+                        <span>高度紧张</span>
+                    </div>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="emotion-meter" style="width: 30%;"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>平静</span>
+                        <span>愤怒</span>
+                        <span>绝望</span>
+                    </div>
+                    <div class="feedback" id="feedback">
+                        <p><i class="fas fa-info-circle"></i> 当前状态：防御心理强烈，需要情感认同</p>
+                    </div>
+                </div>
+                
+                <div class="relationship-section">
+                    <div class="meter-header">
+                        <span>亲子关系指数</span>
+                        <span>中度紧张</span>
+                    </div>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="relationship-meter" style="width: 50%;"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>冲突</span>
+                        <span>健康</span>
+                        <span>亲密</span>
+                    </div>
+                    <div class="feedback">
+                        <p><i class="fas fa-lightbulb"></i> 建议：使用"我感受"句式代替指责</p>
+                    </div>
+                </div>
+                
+                <div class="achievements">
+                    <div class="meter-header">
+                        <span>沟通成就</span>
+                    </div>
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <i class="fas fa-lock"></i>
+                            <div class="achievement-title">倾听大师</div>
+                        </div>
+                        <div class="achievement-item">
+                            <i class="fas fa-lock"></i>
+                            <div class="achievement-title">情绪管理</div>
+                        </div>
+                        <div class="achievement-item unlocked">
+                            <i class="fas fa-medal"></i>
+                            <div class="achievement-title">初次沟通</div>
+                        </div>
+                        <div class="achievement-item">
+                            <i class="fas fa-lock"></i>
+                            <div class="achievement-title">冲突化解</div>
+                        </div>
+                        <div class="achievement-item">
+                            <i class="fas fa-lock"></i>
+                            <div class="achievement-title">信任建立</div>
+                        </div>
+                        <div class="achievement-item">
+                            <i class="fas fa-lock"></i>
+                            <div class="achievement-title">危机干预</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 危机识别工具 -->
+                <div class="emotion-meter" style="margin-top: 20px;">
+                    <div class="meter-header">
+                        <span>危机识别指南</span>
+                    </div>
+                    <div class="fact-item">语言信号："活着没意思"、"我想消失"</div>
+                    <div class="fact-item">行为信号：自伤、极端冲动</div>
+                    <div class="fact-item">情绪信号：长期抑郁、绝望感</div>
+                    <div class="fact-item">遇到危机请立即联系心理援助热线</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span>整体进度</span>
+                    <span>40%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+            </div>
+            
+            <div class="scenario-nav">
+                <button class="nav-btn" onclick="prevScenario()">
+                    <i class="fas fa-backward"></i> 上一场景
+                </button>
+                <button class="nav-btn primary" onclick="nextScenario()">
+                    <i class="fas fa-forward"></i> 下一情景
+                </button>
+                <button class="nav-btn" onclick="showResources()">
+                    <i class="fas fa-life-ring"></i> 紧急帮助
+                </button>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3><i class="fas fa-life-ring"></i> 心理援助资源</h3>
+            <div class="resource-grid">
+                <div class="resource-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div class="resource-text">
+                        <div class="resource-title">24小时心理援助热线</div>
+                        <div class="resource-desc">全国青少年心理热线：12355</div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <i class="fas fa-globe-asia"></i>
+                    <div class="resource-text">
+                        <div class="resource-title">上海心理援助平台</div>
+                        <div class="resource-desc">www.sh12355.com - 事件后开通的专项服务</div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <i class="fas fa-book"></i>
+                    <div class="resource-text">
+                        <div class="resource-title">推荐阅读</div>
+                        <div class="resource-desc">《如何说青少年才会听，如何听青少年才肯说》</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <p>本互动体验基于2019年4月17日上海卢浦大桥事件设计，旨在提高对青少年心理健康的关注和家庭沟通技巧</p>
+            <p>温馨提示：如遇心理危机，请及时联系专业心理援助机构 | 本游戏内容不作为专业心理咨询替代</p>
+        </div>
+    </div>
+
+    <script>
+        // 当前游戏状态
+        const gameState = {
+            emotionLevel: 30, // 0-100
+            relationshipLevel: 50, // 0-100
+            currentScene: 1,
+            achievements: ['初次沟通'],
+            score: 0
+        };
+        
+        // 更新UI
+        function updateUI() {
+            document.getElementById('emotion-meter').style.width = gameState.emotionLevel + '%';
+            document.getElementById('relationship-meter').style.width = gameState.relationshipLevel + '%';
+            
+            // 更新情绪描述
+            let emotionDesc = '';
+            if (gameState.emotionLevel < 20) emotionDesc = '平静';
+            else if (gameState.emotionLevel < 40) emotionDesc = '轻度紧张';
+            else if (gameState.emotionLevel < 60) emotionDesc = '紧张';
+            else if (gameState.emotionLevel < 80) emotionDesc = '高度紧张';
+            else emotionDesc = '危机状态';
+            
+            document.querySelector('.emotion-meter .meter-header span:last-child').textContent = emotionDesc;
+            
+            // 更新关系描述
+            let relationDesc = '';
+            if (gameState.relationshipLevel < 30) relationDesc = '高度紧张';
+            else if (gameState.relationshipLevel < 50) relationDesc = '中度紧张';
+            else if (gameState.relationshipLevel < 70) relationDesc = '一般';
+            else if (gameState.relationshipLevel < 90) relationDesc = '良好';
+            else relationDesc = '非常亲密';
+            
+            document.querySelector('.relationship-section .meter-header span:last-child').textContent = relationDesc;
+        }
+        
+        // 选择回应
+        function selectResponse(option) {
+            const feedback = document.querySelector('#feedback');
+            const emotionMeter = document.getElementById('emotion-meter');
+            const relationMeter = document.getElementById('relationship-meter');
+            
+            // 移除所有选项的选中状态
+            document.querySelectorAll('.response-btn').forEach(btn => {
+                btn.style.border = '1px solid rgba(100, 181, 246, 0.3)';
+                btn.style.boxShadow = 'none';
+            });
+            
+            // 设置当前选项为选中状态
+            event.currentTarget.style.border = '2px solid #4fc3f7';
+            event.currentTarget.style.boxShadow = '0 0 15px rgba(79, 195, 247, 0.5)';
+            
+            // 添加动画效果
+            event.currentTarget.classList.add('bounce');
+            setTimeout(() => {
+                event.currentTarget.classList.remove('bounce');
+            }, 500);
+            
+            // 更新情绪状态
+            switch(option) {
+                case 1:
+                    feedback.innerHTML = `<p><i class="fas fa-exclamation-triangle"></i> <strong>负面效果：</strong> 这种指责性回应会让孩子感到被攻击，可能导致情绪升级。尝试避免使用"总是"、"从不"等绝对化词语。</p>`;
+                    gameState.emotionLevel = Math.max(0, gameState.emotionLevel - 15);
+                    gameState.relationshipLevel = Math.max(0, gameState.relationshipLevel - 10);
+                    break;
+                case 2:
+                    feedback.innerHTML = `<p><i class="fas fa-exclamation-triangle"></i> <strong>负面效果：</strong> 将孩子的问题与自己的付出挂钩会增加孩子的内疚感，不利于问题的解决。</p>`;
+                    gameState.emotionLevel = Math.min(100, gameState.emotionLevel + 10);
+                    gameState.relationshipLevel = Math.max(0, gameState.relationshipLevel - 15);
+                    break;
+                case 3:
+                    feedback.innerHTML = `<p><i class="fas fa-check-circle"></i> <strong>积极效果：</strong> 开放式问题有助于了解事情全貌，关注孩子的感受能建立信任关系。</p>`;
+                    gameState.emotionLevel = Math.max(0, gameState.emotionLevel - 10);
+                    gameState.relationshipLevel = Math.min(100, gameState.relationshipLevel + 10);
+                    gameState.score += 20;
+                    break;
+                case 4:
+                    feedback.innerHTML = `<p><i class="fas fa-check-circle"></i> <strong>最佳选择：</strong> 先认可情绪再询问细节，这种"情绪优先"的沟通方式能有效降低孩子的防御心理。</p>`;
+                    gameState.emotionLevel = Math.max(0, gameState.emotionLevel - 20);
+                    gameState.relationshipLevel = Math.min(100, gameState.relationshipLevel + 15);
+                    gameState.score += 30;
+                    
+                    // 解锁成就
+                    if (!gameState.achievements.includes('情绪管理')) {
+                        gameState.achievements.push('情绪管理');
+                        document.querySelectorAll('.achievement-item')[1].classList.add('unlocked');
+                    }
+                    break;
+            }
+            
+            // 更新UI
+            updateUI();
+            
+            // 更新角色对话
+            if (option === 4) {
+                document.querySelector('.son .dialogue').innerHTML = '他们嘲笑我没有爸爸... 还把我的书包扔到楼下。我实在忍不住了...';
+                document.querySelector('.son .emotion-indicator').textContent = '😢';
+            }
+        }
+        
+        // 下一情景
+        function nextScenario() {
+            // 添加动画效果
+            const nextBtn = document.querySelector('.nav-btn.primary');
+            nextBtn.classList.add('pulse');
+            setTimeout(() => {
+                nextBtn.classList.remove('pulse');
+            }, 1000);
+            
+            // 更新场景
+            if (gameState.currentScene === 1) {
+                gameState.currentScene = 2;
+                document.querySelector('.scene-indicator').innerHTML = '<i class="fas fa-home"></i> 场景 2：回家后沟通';
+                document.querySelector('.scenario-content').innerHTML = `
+                    <div class="character mom">
+                        <div class="avatar">
+                            <i class="fas fa-female"></i>
+                            <div class="emotion-indicator">😌</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">妈妈 (张女士)</div>
+                            <div class="dialogue">
+                                小明，刚刚在车上妈妈情绪不好，对不起。我们能重新聊聊学校发生的事吗？
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character son active">
+                        <div class="avatar">
+                            <i class="fas fa-male"></i>
+                            <div class="emotion-indicator">😟</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">小明 (17岁)</div>
+                            <div class="dialogue">
+                                好吧... 但是你要答应我不生气。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="response-options">
+                        <div class="response-btn" onclick="selectResponse(1)">
+                            <i class="fas fa-1"></i>
+                            <div>当然可以，但你要保证以后不再打架</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(2)">
+                            <i class="fas fa-2"></i>
+                            <div>我不生气，但你要知道打架永远不是解决问题的办法</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(3)">
+                            <i class="fas fa-3"></i>
+                            <div>我保证不生气，告诉我发生了什么</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(4)">
+                            <i class="fas fa-4"></i>
+                            <div>谢谢你愿意告诉我，我保证会认真听你说完</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 案例事实面板 -->
+                    <div class="case-facts">
+                        <h3><i class="fas fa-exclamation-circle"></i> 真实事件后续</h3>
+                        <div class="fact-item">事件后上海市教委组织全市中小学进行心理健康筛查</div>
+                        <div class="fact-item">建立学生个性化心理档案</div>
+                        <div class="fact-item">共青团推出"青春守护计划"</div>
+                        <div class="fact-item">卢浦大桥增设防护设施及心理危机宣传栏</div>
+                    </div>
+                `;
+                
+                // 更新进度
+                document.querySelector('.progress-fill').style.width = '70%';
+                document.querySelector('.progress-header span:last-child').textContent = '70%';
+            } else if (gameState.currentScene === 2) {
+                gameState.currentScene = 3;
+                document.querySelector('.scene-indicator').innerHTML = '<i class="fas fa-school"></i> 场景 3：学校问题解决';
+                document.querySelector('.scenario-content').innerHTML = `
+                    <div class="character mom">
+                        <div class="avatar">
+                            <i class="fas fa-female"></i>
+                            <div class="emotion-indicator">😊</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">妈妈 (张女士)</div>
+                            <div class="dialogue">
+                                明天我陪你去学校，我们一起和老师谈谈那些同学的行为。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character son active">
+                        <div class="avatar">
+                            <i class="fas fa-male"></i>
+                            <div class="emotion-indicator">😌</div>
+                        </div>
+                        <div class="dialogue-container">
+                            <div class="name-tag">小明 (17岁)</div>
+                            <div class="dialogue">
+                                真的吗？但是...他们可能会觉得我告状。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="response-options">
+                        <div class="response-btn" onclick="selectResponse(1)">
+                            <i class="fas fa-1"></i>
+                            <div>怕什么，有妈妈在，看他们还敢欺负你</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(2)">
+                            <i class="fas fa-2"></i>
+                            <div>告状又怎么了？他们做错事就应该负责</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(3)">
+                            <i class="fas fa-3"></i>
+                            <div>我们可以请老师用更温和的方式处理</div>
+                        </div>
+                        
+                        <div class="response-btn" onclick="selectResponse(4)">
+                            <i class="fas fa-4"></i>
+                            <div>别担心，我们会找到尊重双方的方式解决问题</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 案例事实面板 -->
+                    <div class="case-facts">
+                        <h3><i class="fas fa-exclamation-circle"></i> 校园问题解决</h3>
+                        <div class="fact-item">78%的青少年曾遭遇隐性校园霸凌（语言贬低、社交孤立）</div>
+                        <div class="fact-item">隐性霸凌会使抑郁风险增加2.1倍</div>
+                        <div class="fact-item">家校合作是解决校园问题的有效途径</div>
+                        <div class="fact-item">培养孩子应对冲突的能力至关重要</div>
+                    </div>
+                `;
+                
+                // 更新进度
+                document.querySelector('.progress-fill').style.width = '100%';
+                document.querySelector('.progress-header span:last-child').textContent = '100%';
+            }
+        }
+        
+        // 上一情景
+        function prevScenario() {
+            if (gameState.currentScene > 1) {
+                gameState.currentScene--;
+                if (gameState.currentScene === 1) {
+                    document.querySelector('.scene-indicator').innerHTML = '<i class="fas fa-car"></i> 场景 1：车内对话';
+                    document.querySelector('.progress-fill').style.width = '40%';
+                    document.querySelector('.progress-header span:last-child').textContent = '40%';
+                }
+            }
+        }
+        
+        // 显示紧急资源
+        function showResources() {
+            alert("如需紧急帮助，请拨打心理援助热线：\n\n全国青少年心理热线：12355\n北京心理危机干预中心：010-82951332\n上海心理援助热线：021-962525");
+        }
+        
+        // 初始化
+        updateUI();
+    </script>
+</body>
+</html>

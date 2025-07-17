@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北魏开国皇帝拓跋珪</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: #f8f3e6 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f3e6"/><path d="M0,50 Q25,30 50,50 T100,50" stroke="%23d9c7a7" stroke-width="0.5" fill="none"/></svg>');
+            color: #5c3d24;
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 古风背景装饰 */
+        .background-decoration {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            filter: blur(15px);
+            animation: float 30s infinite linear;
+        }
+        
+        .cloud:nth-child(1) { top: 10%; left: 5%; width: 120px; height: 60px; animation-duration: 35s; }
+        .cloud:nth-child(2) { top: 25%; right: 8%; width: 150px; height: 75px; animation-duration: 40s; }
+        .cloud:nth-child(3) { bottom: 15%; left: 15%; width: 100px; height: 50px; animation-duration: 45s; }
+        .cloud:nth-child(4) { bottom: 30%; right: 20%; width: 180px; height: 90px; animation-duration: 50s; }
+        
+        @keyframes float {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* 顶部装饰 */
+        .header-decoration {
+            height: 80px;
+            background: linear-gradient(to bottom, #8c1d13, #5c0a03);
+            position: relative;
+            box-shadow: 0 5px 15px rgba(92, 61, 36, 0.3);
+        }
+        
+        .header-decoration:before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0,0 Q25,10 50,0 T100,0 V10 H0 Z" fill="%23f8f3e6"/></svg>');
+            background-size: 100% 100%;
+        }
+        
+        /* 主标题 */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4rem;
+            color: #8c1d13;
+            text-shadow: 3px 3px 5px rgba(92, 61, 36, 0.3);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #8c1d13, transparent);
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #5c3d24;
+            margin-bottom: 30px;
+            letter-spacing: 5px;
+        }
+        
+        /* 主要内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(92, 61, 36, 0.2);
+            padding: 40px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #d9c7a7;
+        }
+        
+        .content-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #8c1d13, #d9c7a7, #8c1d13);
+        }
+        
+        /* 基本信息部分 */
+        .basic-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .info-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #d9c7a7;
+        }
+        
+        .info-item strong {
+            color: #8c1d13;
+            display: inline-block;
+            min-width: 120px;
+        }
+        
+        .portrait-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .portrait {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border: 10px solid #d9c7a7;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(92, 61, 36, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        
+        .portrait:hover {
+            transform: scale(1.03);
+        }
+        
+        .portrait:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%238c1d13" stroke-width="1" stroke-dasharray="5,5"/></svg>');
+            pointer-events: none;
+        }
+        
+        .portrait img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 章节标题 */
+        .section-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #8c1d13;
+            margin: 40px 0 30px;
+            padding-left: 20px;
+            position: relative;
+            text-align: center;
+        }
+        
+        .section-title:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 10px;
+            width: 100%;
+            height: 15px;
+            background: rgba(140, 29, 19, 0.1);
+            z-index: -1;
+        }
+        
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-left: 20px;
+        }
+        
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #8c1d13, #d9c7a7);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+        }
+        
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #8c1d13;
+            border: 3px solid #d9c7a7;
+        }
+        
+        .timeline-year {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            color: #8c1d13;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content {
+            background: rgba(217, 199, 167, 0.2);
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 3px solid #8c1d13;
+        }
+        
+        /* 诗集展示 */
+        .poetry-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .poetry-card {
+            flex: 1;
+            min-width: 300px;
+            background: #f1e9db;
+            border-radius: 5px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(92, 61, 36, 0.1);
+            border: 1px solid #d9c7a7;
+            transition: transform 0.3s ease;
+        }
+        
+        .poetry-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .poetry-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            color: #8c1d13;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .poetry-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .poetry-author {
+            text-align: right;
+            margin-top: 15px;
+            color: #5c3d24;
+            font-weight: bold;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #5c3d24;
+            background: rgba(217, 199, 167, 0.3);
+            margin-top: 50px;
+            position: relative;
+        }
+        
+        .footer:before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"><path d="M0,10 Q25,0 50,10 T100,10 V0 H0 Z" fill="%23f1e9db"/></svg>');
+            background-size: 100% 100%;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="background-decoration">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <!-- 页头装饰 -->
+    <div class="header-decoration"></div>
+    
+    <!-- 主标题区 -->
+    <div class="hero">
+        <h1>拓跋珪</h1>
+        <div class="subtitle">北魏开国皇帝 · 鲜卑族统一者</div>
+    </div>
+    
+    <div class="container">
+        <!-- 基本信息卡片 -->
+        <div class="content-card">
+            <div class="basic-info">
+                <div class="info-text">
+                    <div class="info-item">
+                        <strong>姓名：</strong> 拓跋珪
+                    </div>
+                    <div class="info-item">
+                        <strong>所属朝代：</strong> 北魏（南北朝时期）
+                    </div>
+                    <div class="info-item">
+                        <strong>出生地：</strong> 代国盛乐（今内蒙古和林格尔）
+                    </div>
+                    <div class="info-item">
+                        <strong>所属民族：</strong> 鲜卑族
+                    </div>
+                    <div class="info-item">
+                        <strong>性别：</strong> 男
+                    </div>
+                    <div class="info-item">
+                        <strong>职务：</strong> 北魏开国皇帝（道武帝）
+                    </div>
+                    <div class="info-item">
+                        <strong>在位时间：</strong> 386年—409年
+                    </div>
+                </div>
+                
+                <div class="portrait-container">
+                    <div >
+                        <img src="images/拓跋珪.png" alt="北魏道武帝拓跋珪画像">
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">人物生平</h2>
+            <p>拓跋珪（371年—409年），字涉珪，鲜卑族拓跋部人，北魏王朝的开国皇帝（386年—409年在位）。他是代国昭成帝拓跋什翼犍之孙，献明帝拓跋寔之子。公元376年，前秦灭代国，拓跋珪被其母贺兰氏携走出逃。公元386年，15岁的拓跋珪趁前秦四分五裂之际在牛川（今内蒙古锡拉木林河）自称代王，重建代国，同年改称魏王，改国号为魏，史称北魏。</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">371年</div>
+                    <div class="timeline-content">出生于代国盛乐（今内蒙古和林格尔），为代王拓跋什翼犍之孙</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">376年</div>
+                    <div class="timeline-content">前秦苻坚灭代国，拓跋珪随母流亡，寄居匈奴独孤部</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">386年</div>
+                    <div class="timeline-content">15岁的拓跋珪在牛川重建代国，即代王位，同年改称魏王，建立北魏</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">395年</div>
+                    <div class="timeline-content">在参合陂之战大败后燕太子慕容宝，奠定北魏统一北方基础</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">398年</div>
+                    <div class="timeline-content">迁都平城（今山西大同），正式称帝，即道武帝</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">409年</div>
+                    <div class="timeline-content">被次子拓跋绍刺杀身亡，终年39岁</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 历史贡献卡片 -->
+        <div class="content-card">
+            <h2 class="section-title">对中华民族共同体的贡献</h2>
+            <p>拓跋珪作为北魏开国皇帝，在促进民族融合和中华统一方面作出了重要贡献：</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <strong>统一北方各族：</strong> 通过一系列军事征服，统一了鲜卑各部，击败了匈奴、柔然等北方游牧民族，结束了北方长期分裂的局面。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <strong>推行汉化政策：</strong> 定都平城后，设立太学，重用汉族士人，吸收汉文化制度，奠定了北魏全面汉化的基础。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <strong>建立封建制度：</strong> 废除鲜卑部落旧制，建立封建中央集权制度，实行"宗主督护制"，促进了鲜卑社会向封建制转型。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <strong>促进民族融合：</strong> 鼓励鲜卑贵族与汉族通婚，提倡鲜卑人学习汉族语言文化，为后来的孝文帝改革奠定了基础。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <strong>奠定北朝基础：</strong> 开创的北魏政权持续近150年，成为南北朝时期北朝的开端，为隋唐大一统创造了条件。
+                    </div>
+                </div>
+            </div>
+            
+            <blockquote style="margin: 30px 0; padding: 20px; background: #f1e9db; border-left: 5px solid #8c1d13; font-style: italic;">
+                "拓跋珪虽起于朔漠，然能创基立制，收服诸部，开疆拓土，定都平城，实为北魏百年基业之奠基者。其推行汉化，虽始未深，然已开北朝民族融合之先河。"
+                <footer style="text-align: right; margin-top: 10px;">—《北史·太祖道武帝纪》</footer>
+            </blockquote>
+        </div>
+        
+        <!-- 诗集展示卡片 -->
+        <div class="content-card">
+            <h2 class="section-title">北魏民族融合相关诗集</h2>
+            <p>北魏时期虽非诗歌鼎盛时代，但已出现反映民族融合的诗作。以下是北魏时期体现中华民族共同体意识的诗歌代表：</p>
+            
+            <div class="poetry-container">
+                <div class="poetry-card">
+                    <div class="poetry-title">《敕勒歌》</div>
+                    <div class="poetry-content">
+                        敕勒川，阴山下。<br>
+                        天似穹庐，笼盖四野。<br>
+                        天苍苍，野茫茫，<br>
+                        风吹草低见牛羊。
+                    </div>
+                    <div class="poetry-author">— 北朝民歌</div>
+                </div>
+                
+                <div class="poetry-card">
+                    <div class="poetry-title">《木兰诗》节选</div>
+                    <div class="poetry-content">
+                        万里赴戎机，关山度若飞。<br>
+                        朔气传金柝，寒光照铁衣。<br>
+                        将军百战死，壮士十年归。
+                    </div>
+                    <div class="poetry-author">— 北朝民歌</div>
+                </div>
+                
+                <div class="poetry-card">
+                    <div class="poetry-title">《咏怀》</div>
+                    <div class="poetry-content">
+                        胡马依北风，越鸟巢南枝。<br>
+                        相去日已远，衣带日已缓。<br>
+                        浮云蔽白日，游子不顾返。
+                    </div>
+                    <div class="poetry-author">— 北魏·高允</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; background: #f1e9db; padding: 20px; border-radius: 5px;">
+                <h3 style="color: #8c1d13; margin-bottom: 15px; text-align: center;">北魏诗歌特点</h3>
+                <p>北魏诗歌具有鲜明的民族融合特征：</p>
+                <ul style="padding-left: 30px; margin-top: 15px;">
+                    <li>融合游牧民族豪放气质与汉族诗歌艺术形式</li>
+                    <li>既有草原生活的描写，也有农耕文明的元素</li>
+                    <li>语言简朴刚健，意境开阔雄浑</li>
+                    <li>体现了北方各民族共同生活、共同战斗的场景</li>
+                    <li>展现了中华民族多元一体格局的早期形态</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="footer">
+     
+        <p>以史为鉴，可知兴替；以人为镜，可明得失</p>
+    </div>
+    
+    <script>
+        // 创建更多云朵
+        document.addEventListener('DOMContentLoaded', function() {
+            const cloudContainer = document.querySelector('.background-decoration');
+            for (let i = 0; i < 8; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                
+                // 随机位置和大小
+                const top = Math.random() * 100;
+                const left = Math.random() * 100;
+                const size = 60 + Math.random() * 100;
+                
+                cloud.style.top = `${top}%`;
+                cloud.style.left = `${left}%`;
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size/2}px`;
+                
+                // 随机动画
+                const duration = 30 + Math.random() * 30;
+                cloud.style.animationDuration = `${duration}s`;
+                
+                cloudContainer.appendChild(cloud);
+            }
+        });
+    </script>
+</body>
+</html>

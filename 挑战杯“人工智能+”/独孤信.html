@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西魏名将——独孤信传</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: #f5e9d4 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" opacity="0.1"><rect width="100%" height="100%" fill="none" stroke="%23a67c52" stroke-width="2"/></svg>');
+            color: #3c281d;
+            line-height: 1.8;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 云朵动画 */
+        .cloud {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.3;
+            animation: float 30s infinite linear;
+        }
+        
+        .cloud:nth-child(1) { top: 10%; left: -100px; width: 200px; height: 60px; animation-duration: 50s; }
+        .cloud:nth-child(2) { top: 30%; right: -150px; width: 250px; height: 80px; animation-duration: 45s; animation-delay: -10s; }
+        .cloud:nth-child(3) { bottom: 20%; left: -120px; width: 180px; height: 50px; animation-duration: 60s; animation-delay: -20s; }
+        
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(calc(100vw + 200px)) translateY(-20px); }
+        }
+        
+        /* 页面容器 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: rgba(245, 233, 212, 0.9);
+            border: 12px double #8b4513;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+            padding: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path d="M20,20 Q40,5 60,20 T100,20" stroke="%23a67c52" fill="none"/></svg>');
+        }
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .header::before, .header::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8b4513, transparent);
+            left: 10%;
+            right: 10%;
+        }
+        
+        .header::before {
+            top: 0;
+        }
+        
+        .header::after {
+            bottom: 0;
+        }
+        
+        .title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            color: #8b1a1a;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #5d4037;
+            letter-spacing: 5px;
+            margin-top: -10px;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: start;
+        }
+        
+        .basic-info {
+            background: rgba(255, 248, 238, 0.7);
+            border: 1px solid #d4b78c;
+            border-radius: 5px;
+            padding: 25px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .basic-info::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid #c9a87c;
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #8b1a1a;
+            text-align: right;
+        }
+        
+        .portrait {
+            position: relative;
+            border: 8px solid #5d4037;
+            box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.5s;
+            background: #3c281d;
+        }
+        
+        .portrait:hover {
+            transform: scale(1.03);
+        }
+        
+        .portrait img {
+            width: 100%;
+            display: block;
+            transition: opacity 0.5s;
+        }
+        
+        .portrait:hover img {
+            opacity: 0.9;
+        }
+        
+        .portrait::after {
+            content: "独孤信像";
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        
+        /* 卷轴效果 */
+        .scroll-section {
+            background: #f0e6d2;
+            padding: 30px;
+            border-left: 15px solid #8b4513;
+            border-right: 15px solid #8b4513;
+            position: relative;
+            margin: 40px 0;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: scrollReveal 2s ease-out;
+        }
+        
+        @keyframes scrollReveal {
+            0% { max-height: 0; opacity: 0; }
+            100% { max-height: 1000px; opacity: 1; }
+        }
+        
+        .section-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.5rem;
+            color: #8b1a1a;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            right: 30%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8b1a1a, transparent);
+        }
+        
+        .poetry {
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-left: 4px solid #8b1a1a;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #5d4037;
+            font-size: 0.9rem;
+            border-top: 1px solid #d4b78c;
+            margin-top: 40px;
+        }
+        
+        .seal {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #8b1a1a;
+            border-radius: 50%;
+            line-height: 80px;
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #8b1a1a;
+            transform: rotate(15deg);
+            margin-top: 20px;
+            background: rgba(245, 233, 212, 0.5);
+        }
+        
+        /* 水墨动画 */
+        .ink-animation {
+            position: relative;
+            height: 200px;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+        
+        .ink-blot {
+            position: absolute;
+            background: #333;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: inkSpread 6s infinite ease-in-out;
+        }
+        
+        .ink-blot:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 20px;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .ink-blot:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 50px;
+            left: 60%;
+            animation-delay: -2s;
+        }
+        
+        .ink-blot:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 100px;
+            left: 40%;
+            animation-delay: -4s;
+        }
+        
+        @keyframes inkSpread {
+            0%, 100% { transform: scale(0.8); opacity: 0.1; }
+            50% { transform: scale(1.5); opacity: 0.3; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .content-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景云朵 -->
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">独孤信</h1>
+            <div class="subtitle">西魏八大柱国 · 三朝国丈</div>
+        </div>
+        
+        <div class="content-section">
+            <div class="portrait">
+                <img src="images/独孤信.png" alt="独孤信画像">
+            </div>
+            
+            <div class="basic-info">
+                <h2><i class="fas fa-user-alt"></i> 人物基本信息</h2>
+                <div class="info-grid">
+                    <div class="info-label">姓名：</div>
+                    <div>独孤信，本名独孤如愿</div>
+                    
+                    <div class="info-label">所属朝代：</div>
+                    <div>北魏→西魏→北周</div>
+                    
+                    <div class="info-label">出生地：</div>
+                    <div>云中郡（今山西大同）</div>
+                    
+                    <div class="info-label">所属民族：</div>
+                    <div>鲜卑族</div>
+                    
+                    <div class="info-label">性别：</div>
+                    <div>男</div>
+                    
+                    <div class="info-label">职务：</div>
+                    <div>西魏八大柱国大将军之一<br>曾任陇右十一州大都督、秦州刺史等职</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ink-animation">
+            <div class="ink-blot"></div>
+            <div class="ink-blot"></div>
+            <div class="ink-blot"></div>
+        </div>
+        
+        <div class="scroll-section">
+            <h2 class="section-title"><i class="fas fa-book"></i> 人物生平</h2>
+            <p>独孤信（502年－557年），本名独孤如愿，鲜卑族，西魏、北周时期名将，八柱国之一。</p>
+            <p>独孤信容貌俊美，善于骑射，少年时便以勇武著称。初为葛荣部下，后投奔北魏孝武帝元修。永熙三年（534年），孝武帝西迁关中，独孤信单骑追随至瀍涧，孝武帝感叹说："武卫遂能辞父母，捐妻子，远来从我。世乱识贞良，岂虚言哉。"</p>
+            <p>西魏建立后，独孤信深受丞相宇文泰信任，出任陇右十一州大都督、秦州刺史。在任期间，他勤政爱民，劝课农桑，教化百姓，使秦州大治。史载"数年之间，公私富实，流民愿附者数万家"。</p>
+            <p>独孤信以其独特的政治智慧，在复杂的民族关系中采取包容政策，促进了汉族与鲜卑族的融合。他推行汉化政策，鼓励鲜卑贵族学习汉族文化，同时尊重各族习俗，为多民族共同体的形成做出了重要贡献。</p>
+            <p>大统十四年（548年），进位柱国大将军。六官建立后，拜大司马。北周建立后，迁太保、大宗伯，晋封卫国公。但因与权臣宇文护政见不合，最终被逼自尽，时年五十五岁。</p>
+        </div>
+        
+        <div class="scroll-section">
+            <h2 class="section-title"><i class="fas fa-flag"></i> 民族共同体贡献</h2>
+            <p>独孤信作为鲜卑族贵族，在促进中华民族共同体形成方面做出了卓越贡献：</p>
+            <ul>
+                <li><strong>推行民族融合政策</strong>：在治理陇右期间，采取平等对待汉族与鲜卑族的政策，鼓励通婚，促进民族融合</li>
+                <li><strong>文化整合先驱</strong>：积极推动鲜卑贵族学习汉文化，同时保留部分鲜卑传统，形成独特的"关陇文化"</li>
+                <li><strong"政治体制创新</strong>：参与创建府兵制，打破民族界限，使汉族与鲜卑族在军事体系中平等合作</li>
+                <li><strong>家族联姻典范</strong>：三个女儿分别成为北周、隋、唐三朝皇后，将鲜卑贵族与汉族世家紧密联系起来</li>
+                <li><strong>经济共同发展</strong>：在治理地方时，注重发展农业和商业，改善民生，增强各民族经济联系</li>
+            </ul>
+            <p>独孤信的政治实践为隋唐时期多民族统一国家的形成奠定了基础，是中华民族共同体发展史上的重要人物。</p>
+        </div>
+        
+        <div class="scroll-section">
+            <h2 class="section-title"><i class="fas fa-pen"></i> 相关诗集</h2>
+            <div class="poetry">
+                <h3>《咏独孤将军》</h3>
+                <p>柱国威名震关陇，<br>
+               三朝国丈世无双。<br>
+               云中俊杰安黎庶，<br>
+               陇右英风护汉羌。</p>
+                <p>剑指沙场胡马遁，<br>
+               心连华夏族魂彰。<br>
+               女儿皆作风鸾舞，<br>
+               一脉相承到大唐。</p>
+            </div>
+            
+            <div class="poetry">
+                <h3>《过秦州怀独孤信》</h3>
+                <p>昔闻柱国守秦凉，<br>
+               汉羌同耕陇亩香。<br>
+               冠盖风流传后世，<br>
+               三朝凤仪出椒房。</p>
+                <p>兵戈已化农桑事，<br>
+               胡汉融为华夏章。<br>
+               今日关山明月在，<br>
+               犹照当年旧城墙。</p>
+            </div>
+            
+            <div class="poetry">
+                <h3>《独孤信》</h3>
+                <p>云中贵胄气轩昂，<br>
+               剑履山河护帝乡。<br>
+               巧化干戈为玉帛，<br>
+               智融胡汉共沧桑。<br>
+
+               </p>
+               
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>历史是民族的记忆，英雄是民族的脊梁</p>
+
+        </div>
+    </div>
+    
+    <script>
+        // 添加卷轴展开效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollSections = document.querySelectorAll('.scroll-section');
+            
+            scrollSections.forEach((section, index) => {
+                // 初始隐藏所有卷轴内容
+                section.style.maxHeight = '0';
+                section.style.opacity = '0';
+                section.style.overflow = 'hidden';
+                
+                // 设置延迟显示
+                setTimeout(() => {
+                    section.style.maxHeight = '1000px';
+                    section.style.opacity = '1';
+                    section.style.transition = 'max-height 2s ease-out, opacity 2s ease-out';
+                }, 500 + index * 300);
+            });
+            
+            // 添加云朵
+            const cloudContainer = document.body;
+            for (let i = 0; i < 5; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.top = `${Math.random() * 100}%`;
+                cloud.style.left = `${Math.random() * 100}%`;
+                cloud.style.width = `${100 + Math.random() * 200}px`;
+                cloud.style.height = `${30 + Math.random() * 70}px`;
+                cloud.style.animationDuration = `${30 + Math.random() * 40}s`;
+                cloud.style.animationDelay = `-${Math.random() * 30}s`;
+                cloudContainer.appendChild(cloud);
+            }
+        });
+    </script>
+</body>
+</html>

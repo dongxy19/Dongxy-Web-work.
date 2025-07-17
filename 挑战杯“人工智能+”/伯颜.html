@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>元朝名将伯颜 - 中华统一功臣</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8b1a1a;
+            --secondary-color: #c19e6b;
+            --bg-color: #f5f0e1;
+            --text-color: #333;
+            --border-color: #d4af37;
+            --accent-color: #4a7c59;
+            --dark-blue: #1a3658;
+        }
+        
+        body {
+            font-family: 'SimSun', '宋体', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1547981609-4b6bf67b7d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(245, 240, 225, 0.9);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 卷轴样式 */
+        .scroll-container {
+            background: url('https://www.transparenttextures.com/patterns/paper.png');
+            background-size: cover;
+            border: 15px solid var(--border-color);
+            border-image: url('https://www.transparenttextures.com/patterns/vintage-speckles.png') 30 round;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            padding: 50px 40px;
+        }
+        
+        .scroll-container::before, .scroll-container::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 100%;
+            top: 0;
+            background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            background-size: cover;
+            z-index: 10;
+        }
+        
+        .scroll-container::before {
+            left: 0;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .scroll-container::after {
+            right: 0;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 标题样式 */
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            color: var(--dark-blue);
+            font-size: 3.8rem;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'STKaiti', '楷体', serif;
+            letter-spacing: 8px;
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-top: -30px;
+            margin-bottom: 40px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        .subtitle::before, .subtitle::after {
+            content: "❧";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .subtitle::before {
+            left: -10px;
+        }
+        
+        .subtitle::after {
+            right: -10px;
+        }
+        
+        .page-title::after {
+            content: "";
+            display: block;
+            width: 400px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--dark-blue), transparent);
+            margin: 20px auto;
+        }
+        
+        /* 基本信息卡片 */
+        .info-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+            align-items: center;
+        }
+        
+        .basic-info {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-left: 8px solid var(--dark-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .basic-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--dark-blue), var(--secondary-color));
+        }
+        
+        .info-item {
+            margin: 18px 0;
+            display: flex;
+            border-bottom: 1px dashed var(--secondary-color);
+            padding-bottom: 12px;
+            animation: fadeIn 1s forwards;
+            opacity: 0;
+        }
+        
+        .info-item:nth-child(1) { animation-delay: 0.2s; }
+        .info-item:nth-child(2) { animation-delay: 0.4s; }
+        .info-item:nth-child(3) { animation-delay: 0.6s; }
+        .info-item:nth-child(4) { animation-delay: 0.8s; }
+        .info-item:nth-child(5) { animation-delay: 1.0s; }
+        .info-item:nth-child(6) { animation-delay: 1.2s; }
+        
+        .info-label {
+            font-weight: bold;
+            width: 150px;
+            color: var(--dark-blue);
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .info-label::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            top: -8px;
+        }
+        
+        .info-value {
+            flex: 1;
+            font-size: 1.2rem;
+            color: #1a3658;
+        }
+        
+        .portrait {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            animation: float 8s ease-in-out infinite;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .portrait img {
+            width: 100%;
+            max-width: 450px;
+            border: 10px solid var(--dark-blue);
+            border-radius: 3px;
+            transition: transform 0.8s, filter 0.8s;
+            transform: rotateY(0deg);
+            transform-origin: center;
+            filter: sepia(0.3) brightness(1.05);
+        }
+        
+        .portrait:hover img {
+            transform: rotateY(-10deg) scale(1.03);
+            filter: sepia(0) brightness(1.1);
+        }
+        
+        .portrait::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            filter: blur(10px);
+            z-index: -1;
+        }
+        
+        /* 人生经历 */
+        .life-experience {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            border-left: 8px solid var(--dark-blue);
+            padding-left: 20px;
+            margin: 40px 0;
+            font-family: 'STKaiti', '楷体', serif;
+            position: relative;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--dark-blue), transparent);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--dark-blue), var(--primary-color));
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 30px 50px;
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 0;
+        }
+        
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            border: 2px solid var(--border-color);
+            transition: transform 0.5s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--primary-color);
+            top: 40px;
+            border-radius: 50%;
+            border: 4px solid var(--border-color);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -12px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -12px;
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(139, 26, 26, 0.1);
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+        }
+        
+        /* 贡献部分 */
+        .contributions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            margin: 40px 0;
+        }
+        
+        .contribution-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-top: 6px solid var(--dark-blue);
+            transition: transform 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contribution-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .contribution-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--dark-blue), var(--secondary-color));
+        }
+        
+        .contribution-title {
+            color: var(--dark-blue);
+            font-size: 1.7rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-family: 'STKaiti', '楷体', serif;
+        }
+        
+        .contribution-title i {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        /* 诗集展示 */
+        .poetry-section {
+            background: rgba(26, 54, 88, 0.05);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 60px 0;
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .poetry-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/rice-paper-3.png');
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .poetry-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .poetry-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            position: relative;
+            transition: all 0.5s;
+            border-left: 6px solid var(--dark-blue);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .poetry-card:hover {
+            transform: translateY(-8px) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .poetry-title {
+            color: var(--dark-blue);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'STKaiti', '楷体', serif;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .poetry-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+        
+        .poetry-content {
+            font-style: italic;
+            line-height: 2.2;
+            text-align: center;
+            font-family: 'STKaiti', '楷体', serif;
+            font-size: 1.2rem;
+            color: #1a3658;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+            background: linear-gradient(to right, var(--dark-blue), #2c4d7a);
+            color: white;
+            font-size: 1.2rem;
+            border-top: 5px solid var(--border-color);
+            position: relative;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: url('https://www.transparenttextures.com/patterns/arabesque.png');
+            background-size: contain;
+            opacity: 0.7;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 动画效果 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); }
+            100% { text-shadow: 0 0 15px rgba(139, 26, 26, 0.5), 0 0 25px rgba(193, 158, 107, 0.6); }
+        }
+        
+        .floating-clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: url('https://www.transparenttextures.com/patterns/rice-paper-2.png');
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: drift linear infinite;
+        }
+        
+        .cloud:nth-child(1) {
+            width: 250px;
+            height: 80px;
+            top: 15%;
+            left: 5%;
+            animation-duration: 70s;
+        }
+        
+        .cloud:nth-child(2) {
+            width: 300px;
+            height: 100px;
+            top: 40%;
+            right: 8%;
+            animation-duration: 90s;
+        }
+        
+        .cloud:nth-child(3) {
+            width: 200px;
+            height: 60px;
+            top: 75%;
+            left: 15%;
+            animation-duration: 60s;
+        }
+        
+        @keyframes drift {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100vw); }
+        }
+        
+        .decorative-border {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            background: url('https://www.transparenttextures.com/patterns/chinese-pattern.png');
+            background-size: contain;
+            z-index: 10;
+        }
+        
+        .decorative-border.top {
+            top: 0;
+        }
+        
+        .decorative-border.bottom {
+            bottom: 0;
+        }
+        
+        .seal {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/YuanDynastySeal.JPG/800px-YuanDynastySeal.JPG');
+            background-size: cover;
+            opacity: 0.8;
+            filter: sepia(1) brightness(0.9);
+            border-radius: 50%;
+            top: 50px;
+            right: 50px;
+            animation: rotateSeal 30s linear infinite;
+            z-index: 5;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes rotateSeal {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .info-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 80px;
+                padding-right: 20px;
+                left: 0 !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                left: -40px;
+            }
+            
+            .page-title {
+                font-size: 2.8rem;
+            }
+            
+            .seal {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 浮动云朵背景 -->
+    <div class="floating-clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+    
+    <!-- 顶部装饰边框 -->
+    <div class="decorative-border top"></div>
+    
+    <div class="container">
+        <!-- 页面标题 -->
+        <h1 class="page-title">元朝名将伯颜</h1>
+        <div class="subtitle">大元帝国一统江山的奠基者</div>
+        
+        <!-- 卷轴内容区 -->
+        <div class="scroll-container">
+            <!-- 基本信息卡片 -->
+            <div class="info-card">
+                <div class="basic-info">
+                    <div class="info-item">
+                        <div class="info-label">姓名：</div>
+                        <div class="info-value">伯颜（Bayan）</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">所属朝代：</div>
+                        <div class="info-value">元朝</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">出生地：</div>
+                        <div class="info-value">伊儿汗国（今伊朗境内）</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">所属民族：</div>
+                        <div class="info-value">蒙古巴邻部</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">性别：</div>
+                        <div class="info-value">男</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">职务：</div>
+                        <div class="info-value">中书左丞相、平宋大元帅</div>
+                    </div>
+                </div>
+                
+                <div class="portrait">
+                    <img src="images/伯颜.jpg">
+                    <p>元代名将伯颜画像</p>
+                </div>
+            </div>
+            
+            <!-- 人生经历 -->
+            <div class="life-experience">
+                <h2 class="section-title">人物生平</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1236年</div>
+                            <p>伯颜出生于伊儿汗国（今伊朗地区），出身于蒙古巴邻部贵族家庭，自幼聪慧过人，精通多种语言。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1265年</div>
+                            <p>随伊儿汗国使团到大都朝见元世祖忽必烈，因才能出众被忽必烈留用，成为元朝重臣。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1273年</div>
+                            <p>被任命为平宋大军统帅，率二十万大军南下攻宋，展现卓越军事才能。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1276年</div>
+                            <p>率军攻占南宋都城临安（今杭州），俘宋恭帝及谢太后，南宋灭亡，完成中国统一大业。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1280年</div>
+                            <p>被任命为中书左丞相，成为元朝最高行政长官，主持国家政务。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">1295年</div>
+                            <p>伯颜病逝于大都（今北京），享年59岁。元成宗追赠其为"太师、淮王"，谥号"忠武"。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 对中华民族共同体的贡献 -->
+            <div class="contributions-section">
+                <h2 class="section-title">民族融合贡献</h2>
+                <div class="contributions">
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-globe-asia"></i> 完成国家统一</h3>
+                        <p>伯颜作为元军统帅，成功攻灭南宋，结束了自唐末以来近四百年的分裂局面，实现了中国历史上空前的大一统，为多民族国家的形成奠定基础。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-handshake"></i> 推行民族和解政策</h3>
+                        <p>在攻占临安后，伯颜禁止元军屠城，保护南宋皇室和百姓，尊重汉文化传统，促进了蒙汉民族和解，避免了大规模流血冲突。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-balance-scale"></i> 建立统一行政制度</h3>
+                        <p>担任丞相期间，伯颜参与制定行省制度，将全国划分为十一个行省，建立统一高效的行政体系，加强了中央对边疆地区的管理。</p>
+                    </div>
+                    <div class="contribution-item">
+                        <h3 class="contribution-title"><i class="fas fa-road"></i> 促进经济文化交流</h3>
+                        <p>统一后，伯颜主持修建贯通南北的驿道，恢复大运河航运，促进南北经济文化交流，使蒙古、汉、回、藏等各民族交往日益密切。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 诗集展示 -->
+            <div class="poetry-section">
+                <h2 class="section-title">诗词作品</h2>
+                <div class="poetry-container">
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《克李庭芝》</h3>
+                        <div class="poetry-content">
+                            剑指江淮万马奔，<br>
+                            旌旗蔽日动乾坤。<br>
+                            临安城下收降表，<br>
+                            一统山河入大元。
+                        </div>
+                    </div>
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《过金陵》</h3>
+                        <div class="poetry-content">
+                            六朝金粉化烟尘，<br>
+                            王气今归紫塞云。<br>
+                            莫道江南文采盛，<br>
+                            天骄原亦重斯文。
+                        </div>
+                    </div>
+                    <div class="poetry-card">
+                        <h3 class="poetry-title">《班师回朝》</h3>
+                        <div class="poetry-content">
+                            十年征战定江山，<br>
+                            万骑归朝奏凯还。<br>
+                            从此胡汉无分界，<br>
+                            同沐天恩共宇寰。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p>元朝名将伯颜 (1236年-1295年) | 大元帝国统一战争的主要统帅</p>
+            <p>"山河一统功勋著，蒙汉同源四海春" —— 伯颜的历史贡献与民族融合思想</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 添加时间线动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.animation = `fadeIn 1s ease-out forwards`;
+                }, 300 * index);
+            });
+            
+            // 添加信息项动画
+            const infoItems = document.querySelectorAll('.info-item');
+            infoItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.animation = `fadeIn 0.8s ease-out forwards`;
+                }, 150 * index);
+            });
+            
+            // 添加浮动效果
+            const cards = document.querySelectorAll('.contribution-item, .poetry-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angleY = (x - centerX) / 25;
+                    const angleX = (centerY - y) / 25;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
